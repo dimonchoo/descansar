@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Час перерви</title>
+    <script>
+        function updateTime() {
+            const breakInput = document.getElementById('breakTime');
+            const currentTimeElement = document.getElementById('currentTime');
+            const returnTimeElement = document.getElementById('returnTime');
+
+            const now = new Date();
+            const breakDuration = parseInt(breakInput.value, 10) || 15;
+            const returnTime = new Date(now.getTime() + breakDuration * 60000);
+
+            currentTimeElement.textContent = now.toLocaleTimeString();
+            returnTimeElement.textContent = returnTime.toLocaleTimeString();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('breakTime').addEventListener('input', updateTime);
+            updateTime();
+            setInterval(updateTime, 1000);
+        });
+    </script>
+</head>
+<body>
+<h2>Таймер перерви</h2>
+<label for="breakTime">Тривалість перерви (хвилини): </label>
+<input type="number" id="breakTime" value="15" min="1">
+<p>Зараз: <span id="currentTime"></span></p>
+<p>Потрібно повернутися о: <span id="returnTime"></span></p>
+</body>
+</html>
