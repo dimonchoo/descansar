@@ -277,6 +277,50 @@
                     <span class="stats__label">Час роботи</span>
                 </div>
             </section>
+
+            <!-- Global Statistics -->
+            <section class="global-stats" id="globalStats" aria-label="Загальна статистика">
+                <h3 class="global-stats__title">Ваша статистика</h3>
+
+                <div class="global-stats__cards">
+                    <div class="stat-card">
+                        <span class="stat-card__icon">🔥</span>
+                        <span class="stat-card__value" id="streakDays">0</span>
+                        <span class="stat-card__label">днів поспіль</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card__icon">☕</span>
+                        <span class="stat-card__value" id="totalBreaks">0</span>
+                        <span class="stat-card__label">перерв</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card__icon">⏱️</span>
+                        <span class="stat-card__value" id="totalMinutes">0</span>
+                        <span class="stat-card__label">хвилин відпочинку</span>
+                    </div>
+                </div>
+
+                <div class="global-stats__today">
+                    <h4 class="global-stats__subtitle">Сьогодні</h4>
+                    <div class="today-stats">
+                        <div class="today-stats__item">
+                            <span class="today-stats__value" id="todayBreaks">0</span>
+                            <span class="today-stats__label">перерв</span>
+                        </div>
+                        <div class="today-stats__item">
+                            <span class="today-stats__value" id="todayMinutes">0</span>
+                            <span class="today-stats__label">хвилин</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="global-stats__history">
+                    <h4 class="global-stats__subtitle">Остання активність</h4>
+                    <ul class="history-list" id="historyList">
+                        <li class="history-list__empty">Поки немає записів</li>
+                    </ul>
+                </div>
+            </section>
         </main>
 
         <!-- Footer -->

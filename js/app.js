@@ -7,6 +7,7 @@ import SimpleMode from './modes/SimpleMode.js';
 import AdvancedMode from './modes/AdvancedMode.js';
 import Display from './ui/Display.js';
 import Controls from './ui/Controls.js';
+import Stats from './ui/Stats.js';
 import Storage from './core/Storage.js';
 import Notifications from './core/Notifications.js';
 import { MODES, THEMES, TIMER_STATES } from './utils/constants.js';
@@ -18,6 +19,7 @@ class App {
         this.advancedMode = null;
         this.display = null;
         this.controls = null;
+        this.stats = null;
         this.currentMode = MODES.SIMPLE;
         this.activeTimer = null;
     }
@@ -42,6 +44,8 @@ class App {
         // Ініціалізуємо UI
         this.display = new Display();
         this.controls = new Controls();
+        this.stats = new Stats();
+        this.stats.init();
 
         // Встановлюємо активний таймер
         this.activeTimer = this.simpleMode;
@@ -117,6 +121,7 @@ class App {
         this.simpleMode.onComplete = () => {
             this.display.showCompleted(this.simpleMode.timer.currentPhase);
             this.controls.updateState(TIMER_STATES.COMPLETED);
+            this.stats.update(); // Оновлюємо статистику
         };
 
         this.simpleMode.onStateChange = (data) => {
@@ -138,6 +143,7 @@ class App {
                 completedCycles: data.completedCycles,
                 totalWorkMinutes: data.totalWorkMinutes,
             });
+            this.stats.update(); // Оновлюємо статистику
         };
 
         this.advancedMode.onPhaseChange = (data) => {
