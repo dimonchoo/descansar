@@ -74,43 +74,101 @@ class Notifications {
         if (!this.soundEnabled) return;
 
         try {
-            // Генеруємо простий звук за допомогою Web Audio API
+            // Спочатку пробуємо Web Audio API
             if (this.audioContext) {
                 // Розблокуємо аудіо контекст якщо потрібно
                 if (this.audioContext.state === 'suspended') {
                     await this.audioContext.resume();
                 }
 
-                const oscillator = this.audioContext.createOscillator();
-                const gainNode = this.audioContext.createGain();
-
-                oscillator.connect(gainNode);
-                gainNode.connect(this.audioContext.destination);
-
-                // Різні звуки для різних типів
-                if (type === 'work_end') {
-                    // Короткий приємний сигнал для закінчення роботи
-                    oscillator.frequency.setValueAtTime(523.25, this.audioContext.currentTime); // C5
-                    oscillator.frequency.setValueAtTime(659.25, this.audioContext.currentTime + 0.1); // E5
-                    oscillator.frequency.setValueAtTime(783.99, this.audioContext.currentTime + 0.2); // G5
-                } else if (type === 'break_end') {
-                    // Більш енергійний сигнал для закінчення перерви
-                    oscillator.frequency.setValueAtTime(783.99, this.audioContext.currentTime); // G5
-                    oscillator.frequency.setValueAtTime(659.25, this.audioContext.currentTime + 0.15); // E5
-                } else {
-                    // Стандартний сигнал
-                    oscillator.frequency.setValueAtTime(440, this.audioContext.currentTime); // A4
-                    oscillator.frequency.setValueAtTime(554.37, this.audioContext.currentTime + 0.15); // C#5
-                }
-
-                gainNode.gain.setValueAtTime(0.3, this.audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.5);
-
-                oscillator.start(this.audioContext.currentTime);
-                oscillator.stop(this.audioContext.currentTime + 0.5);
+                // Створюємо більш помітний звук
+                this.playTone(type);
+            } else {
+                // Fallback: використовуємо HTML5 Audio з data URL (простий beep)
+                this.playFallbackSound();
             }
         } catch (e) {
             console.warn('Unable to play sound:', e);
+            // Спробуємо fallback
+            this.playFallbackSound();
+        }
+    }
+
+    /**
+     * Відтворює тон через Web Audio API
+     * @param {string} type - Тип звуку
+     */
+    playTone(type) {
+        const ctx = this.audioContext;
+        const now = ctx.currentTime;
+
+        // Створюємо кілька нот для мелодії
+        const notes = type === 'break_end'
+            ? [784, 659, 784, 1047] // G5, E5, G5, C6 - енергійна мелодія
+            : [523, 659, 784, 1047]; // C5, E5, G5, C6 - приємна мелодія
+
+        notes.forEach((freq, i) => {
+            const oscillator = ctx.createOscillator();
+            const gainNode = ctx.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(ctx.destination);
+
+            oscillator.frequency.setValueAtTime(freq, now + i * 0.15);
+            oscillator.type = 'sine';
+
+            gainNode.gain.setValueAtTime(0.4, now + i * 0.15);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, now + i * 0.15 + 0.3);
+
+            oscillator.start(now + i * 0.15);
+            oscillator.stop(now + i * 0.15 + 0.3);
+        });
+    }
+
+    /**
+     * Fallback звук через HTML5 Audio
+     */
+    playFallbackSound() {
+        try {
+            // Генеруємо простий beep звук як base64
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+
+            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.5);
+        } catch (e) {
+            console.warn('Fallback sound failed:', e);
+        }
+    }
+
+    /**
+     * Розблоковує аудіо (викликати при першій взаємодії)
+     */
+    async unlockAudio() {
+        if (this.audioContext && this.audioContext.state === 'suspended') {
+            try {
+                await this.audioContext.resume();
+                // Тихий тестовий звук
+                const oscillator = this.audioContext.createOscillator();
+                const gainNode = this.audioContext.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(this.audioContext.destination);
+                gainNode.gain.value = 0.001;
+                oscillator.start();
+                oscillator.stop(this.audioContext.currentTime + 0.001);
+            } catch (e) {
+                // Ігноруємо помилки
+            }
         }
     }
 

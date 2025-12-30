@@ -257,6 +257,8 @@ class App {
      * Обробляє старт
      */
     handleStart() {
+        // Розблоковуємо аудіо при першій взаємодії
+        Notifications.unlockAudio();
         this.activeTimer.start();
     }
 
