@@ -4,6 +4,7 @@
  */
 
 import { $ } from '../utils/helpers.js';
+import lottieAnimations from './LottieAnimations.js';
 
 class EyeExercises {
     constructor() {
@@ -11,9 +12,11 @@ class EyeExercises {
         this.currentExercise = null;
         this.currentStep = 0;
         this.stepTimeout = null;
+        this.lottiePlayer = null;
 
         this.elements = {
             container: null,
+            lottieContainer: null,
             visual: null,
             instruction: null,
             timer: null,
@@ -91,6 +94,17 @@ class EyeExercises {
         this.cacheElements();
         this.bindEvents();
         this.renderExerciseSelector();
+        this.initLottie();
+    }
+
+    /**
+     * Ініціалізує Lottie анімацію
+     */
+    initLottie() {
+        this.lottiePlayer = lottieAnimations.create('eyeLottie', 'eye', {
+            loop: true,
+            autoplay: false,
+        });
     }
 
     /**
@@ -99,6 +113,7 @@ class EyeExercises {
     cacheElements() {
         this.elements = {
             container: $('eyeExerciseContainer'),
+            lottieContainer: $('eyeLottie'),
             visual: $('eyeVisual'),
             instruction: $('eyeInstruction'),
             timer: $('eyeTimer'),
@@ -163,6 +178,9 @@ class EyeExercises {
         this.currentStep = 0;
         this.currentExercise = this.exercises[this.currentExerciseKey];
 
+        // Запускаємо Lottie анімацію
+        lottieAnimations.play('eyeLottie');
+
         this.updateUI(true);
         this.runStep();
     }
@@ -172,6 +190,9 @@ class EyeExercises {
      */
     stop() {
         this.isRunning = false;
+
+        // Зупиняємо Lottie анімацію
+        lottieAnimations.stop('eyeLottie');
 
         if (this.stepTimeout) {
             clearTimeout(this.stepTimeout);
