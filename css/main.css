@@ -1601,3 +1601,185 @@ body {
         font-size: 3rem;
     }
 }
+
+/* ========================================
+   Ambient Sounds
+   ======================================== */
+
+.ambient {
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+}
+
+.ambient__title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--space-1);
+}
+
+.ambient__subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-5);
+}
+
+.ambient__sounds {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+}
+
+.ambient__btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    background: var(--color-bg);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.ambient__btn:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.ambient__btn--active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+}
+
+.ambient__btn--active .ambient__btn-label {
+    color: white;
+}
+
+.ambient__btn-icon {
+    font-size: 2rem;
+}
+
+.ambient__btn-label {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.ambient__controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+.ambient__current {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.ambient__current-label {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+}
+
+.ambient__volume {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.ambient__volume-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.ambient__volume-icon {
+    font-size: var(--font-size-base);
+}
+
+.ambient__volume-slider {
+    width: 100%;
+    max-width: 200px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: var(--color-bg);
+    appearance: none;
+    cursor: pointer;
+}
+
+.ambient__volume-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    cursor: pointer;
+    transition: transform var(--transition-fast);
+}
+
+.ambient__volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.ambient__volume-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border: none;
+    border-radius: 50%;
+    background: var(--color-primary);
+    cursor: pointer;
+}
+
+.ambient__volume-slider::-webkit-slider-runnable-track {
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) var(--value, 50%), var(--color-border) var(--value, 50%), var(--color-border) 100%);
+}
+
+/* Small button variant */
+.btn--small {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-size-sm);
+}
+
+.btn--small .btn__icon {
+    font-size: var(--font-size-sm);
+}
+
+/* Mobile adjustments for ambient */
+@media (max-width: 480px) {
+    .ambient {
+        padding: var(--space-5);
+    }
+
+    .ambient__sounds {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-2);
+    }
+
+    .ambient__btn {
+        padding: var(--space-3);
+    }
+
+    .ambient__btn-icon {
+        font-size: 1.5rem;
+    }
+
+    .ambient__btn-label {
+        font-size: var(--font-size-xs);
+    }
+}
