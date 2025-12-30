@@ -4,6 +4,7 @@
  */
 
 import { $ } from '../utils/helpers.js';
+import lottieAnimations from './LottieAnimations.js';
 
 class Exercises {
     constructor() {
@@ -11,10 +12,11 @@ class Exercises {
         this.isRunning = false;
         this.animationFrame = null;
         this.phaseTimeout = null;
+        this.lottiePlayer = null;
 
         this.elements = {
             container: null,
-            circle: null,
+            lottieContainer: null,
             instruction: null,
             timer: null,
             startBtn: null,
@@ -66,6 +68,17 @@ class Exercises {
         this.cacheElements();
         this.bindEvents();
         this.renderTechniqueSelector();
+        this.initLottie();
+    }
+
+    /**
+     * Ініціалізує Lottie анімацію
+     */
+    initLottie() {
+        this.lottiePlayer = lottieAnimations.create('breathingLottie', 'meditation', {
+            loop: true,
+            autoplay: false,
+        });
     }
 
     /**
@@ -74,7 +87,7 @@ class Exercises {
     cacheElements() {
         this.elements = {
             container: $('exerciseContainer'),
-            circle: $('breathingCircle'),
+            lottieContainer: $('breathingLottie'),
             instruction: $('breathingInstruction'),
             timer: $('breathingTimer'),
             startBtn: $('startExercise'),
@@ -138,6 +151,9 @@ class Exercises {
         this.currentPhaseIndex = 0;
         this.cyclesCompleted = 0;
 
+        // Запускаємо Lottie анімацію
+        lottieAnimations.play('breathingLottie');
+
         this.updateUI(true);
         this.runPhase();
     }
@@ -147,6 +163,9 @@ class Exercises {
      */
     stop() {
         this.isRunning = false;
+
+        // Зупиняємо Lottie анімацію
+        lottieAnimations.stop('breathingLottie');
 
         if (this.phaseTimeout) {
             clearTimeout(this.phaseTimeout);

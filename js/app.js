@@ -12,6 +12,7 @@ import Exercises from './features/Exercises.js';
 import EyeExercises from './features/EyeExercises.js';
 import Forest from './features/Forest.js';
 import AmbientSounds from './features/AmbientSounds.js';
+import lottieAnimations from './features/LottieAnimations.js';
 import Storage from './core/Storage.js';
 import Notifications from './core/Notifications.js';
 import { MODES, THEMES, TIMER_STATES } from './utils/constants.js';
@@ -143,6 +144,7 @@ class App {
             this.display.showCompleted(this.simpleMode.timer.currentPhase);
             this.controls.updateState(TIMER_STATES.COMPLETED);
             this.stats.update(); // Оновлюємо статистику
+            this.showCelebration(); // Показуємо анімацію святкування
         };
 
         this.simpleMode.onStateChange = (data) => {
@@ -374,6 +376,29 @@ class App {
         if (this.currentMode === MODES.ADVANCED && this.advancedMode.isIdle()) {
             this.display.setInitialState(this.advancedMode.settings.workDuration);
         }
+    }
+
+    /**
+     * Показує анімацію святкування
+     */
+    showCelebration() {
+        const container = document.getElementById('celebrationLottie');
+        if (!container) return;
+
+        // Показуємо контейнер
+        container.style.display = 'block';
+
+        // Створюємо Lottie анімацію
+        lottieAnimations.create('celebrationLottie', 'confetti', {
+            loop: false,
+            autoplay: true,
+        });
+
+        // Ховаємо після завершення анімації
+        setTimeout(() => {
+            container.style.display = 'none';
+            lottieAnimations.destroy('celebrationLottie');
+        }, 3000);
     }
 }
 

@@ -5,16 +5,18 @@
 
 import { $ } from '../utils/helpers.js';
 import Storage from '../core/Storage.js';
+import lottieAnimations from './LottieAnimations.js';
 
 class Forest {
     constructor() {
         this.elements = {
             container: null,
-            tree: null,
+            lottieContainer: null,
             ground: null,
             treeCount: null,
             message: null,
         };
+        this.lottiePlayer = null;
 
         this.growthStages = [
             { stage: 0, emoji: '🌱', name: 'Насіння', minProgress: 0 },
@@ -35,8 +37,19 @@ class Forest {
      */
     init() {
         this.cacheElements();
+        this.initLottie();
         this.updateTreeCount();
         this.reset();
+    }
+
+    /**
+     * Ініціалізує Lottie анімацію
+     */
+    initLottie() {
+        this.lottiePlayer = lottieAnimations.create('forestLottie', 'plant', {
+            loop: false,
+            autoplay: false,
+        });
     }
 
     /**
@@ -45,7 +58,7 @@ class Forest {
     cacheElements() {
         this.elements = {
             container: $('forestContainer'),
-            tree: $('forestTree'),
+            lottieContainer: $('forestLottie'),
             ground: $('forestGround'),
             treeCount: $('forestTreeCount'),
             message: $('forestMessage'),
@@ -62,6 +75,9 @@ class Forest {
 
         this.isGrowing = true;
         this.currentProgress = 0;
+
+        // Запускаємо Lottie анімацію
+        lottieAnimations.play('forestLottie');
 
         // Розраховуємо крок росту
         const updateInterval = 1000; // 1 секунда
@@ -97,6 +113,9 @@ class Forest {
 
         this.isGrowing = false;
 
+        // Зупиняємо Lottie анімацію
+        lottieAnimations.stop('forestLottie');
+
         if (this.growInterval) {
             clearInterval(this.growInterval);
             this.growInterval = null;
@@ -104,9 +123,8 @@ class Forest {
 
         // Дерево засохло
         this.updateMessage('Дерево засохло 😢');
-        if (this.elements.tree) {
-            this.elements.tree.textContent = '🥀';
-            this.elements.tree.classList.add('forest__tree--dead');
+        if (this.elements.lottieContainer) {
+            this.elements.lottieContainer.classList.add('forest__lottie--dead');
         }
     }
 
@@ -127,8 +145,8 @@ class Forest {
         this.updateTree();
         this.updateMessage('Дерево виросло! 🎉');
 
-        if (this.elements.tree) {
-            this.elements.tree.classList.add('forest__tree--complete');
+        if (this.elements.lottieContainer) {
+            this.elements.lottieContainer.classList.add('forest__lottie--complete');
         }
     }
 
@@ -139,14 +157,16 @@ class Forest {
         this.isGrowing = false;
         this.currentProgress = 0;
 
+        // Зупиняємо і скидаємо Lottie
+        lottieAnimations.stop('forestLottie');
+
         if (this.growInterval) {
             clearInterval(this.growInterval);
             this.growInterval = null;
         }
 
-        if (this.elements.tree) {
-            this.elements.tree.textContent = '🌱';
-            this.elements.tree.className = 'forest__tree';
+        if (this.elements.lottieContainer) {
+            this.elements.lottieContainer.className = 'forest__lottie';
         }
 
         if (this.elements.message) {
@@ -160,14 +180,8 @@ class Forest {
      * Оновлює відображення дерева
      */
     updateTree() {
-        if (!this.elements.tree) return;
-
-        const stage = this.getCurrentStage();
-        this.elements.tree.textContent = stage.emoji;
-
-        // Масштабуємо дерево відповідно до прогресу
-        const scale = 0.5 + (this.currentProgress / 100) * 0.5;
-        this.elements.tree.style.transform = `scale(${scale})`;
+        // Оновлюємо прогрес Lottie анімації
+        lottieAnimations.setProgress('forestLottie', this.currentProgress);
     }
 
     /**

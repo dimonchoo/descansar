@@ -53,6 +53,9 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/css/main.css?v=2">
 
+    <!-- Lottie Player -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
     {
@@ -137,6 +140,9 @@
 
             <!-- Timer display -->
             <section class="timer" aria-label="Таймер">
+                <!-- Celebration animation (hidden by default) -->
+                <div class="timer__celebration" id="celebrationLottie" style="display: none;"></div>
+
                 <!-- Progress ring -->
                 <div class="timer__progress">
                     <svg class="progress-ring" viewBox="0 0 200 200" aria-hidden="true">
@@ -293,9 +299,10 @@
                 <p class="exercise__description" id="exerciseDescription"></p>
 
                 <div class="exercise__visual">
-                    <div class="breathing-circle" id="breathingCircle">
-                        <span class="breathing-circle__instruction" id="breathingInstruction">Натисніть старт</span>
-                        <span class="breathing-circle__timer" id="breathingTimer"></span>
+                    <div class="breathing-lottie" id="breathingLottie"></div>
+                    <div class="breathing-overlay">
+                        <span class="breathing-overlay__instruction" id="breathingInstruction">Натисніть старт</span>
+                        <span class="breathing-overlay__timer" id="breathingTimer"></span>
                     </div>
                 </div>
 
@@ -328,7 +335,8 @@
                 <p class="eye-exercise__description" id="eyeExerciseDescription"></p>
 
                 <div class="eye-exercise__visual-container">
-                    <div class="eye-visual" id="eyeVisual">👁️</div>
+                    <div class="eye-lottie" id="eyeLottie"></div>
+                    <div class="eye-visual-fallback" id="eyeVisual">👁️</div>
                 </div>
 
                 <div class="eye-exercise__instruction" id="eyeInstruction">Натисніть старт</div>
@@ -405,8 +413,8 @@
 
                 <div class="forest__scene">
                     <div class="forest__sky"></div>
-                    <div class="forest__tree-container">
-                        <div class="forest__tree" id="forestTree">🌱</div>
+                    <div class="forest__lottie-container">
+                        <div class="forest__lottie" id="forestLottie"></div>
                     </div>
                     <div class="forest__ground" id="forestGround">
                         <div class="forest__grass"></div>
