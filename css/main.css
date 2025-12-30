@@ -1042,3 +1042,181 @@ body {
         font-size: var(--font-size-lg);
     }
 }
+
+/* ========================================
+   Breathing Exercises
+   ======================================== */
+
+.exercise {
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+}
+
+.exercise__title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--space-1);
+}
+
+.exercise__subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+}
+
+.exercise__selector {
+    margin-bottom: var(--space-3);
+}
+
+.exercise__select {
+    width: 100%;
+    max-width: 280px;
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--font-size-base);
+    font-family: inherit;
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-3) center;
+    padding-right: var(--space-8);
+}
+
+.exercise__select:hover {
+    border-color: var(--color-primary);
+}
+
+.exercise__select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.exercise__description {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-5);
+    min-height: 1.5em;
+}
+
+.exercise__visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: var(--space-4);
+    min-height: 200px;
+}
+
+.breathing-circle {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform 4s ease-in-out;
+    box-shadow:
+        0 0 0 8px rgba(99, 102, 241, 0.1),
+        0 0 0 16px rgba(99, 102, 241, 0.05),
+        var(--shadow-lg);
+}
+
+.exercise--active .breathing-circle {
+    box-shadow:
+        0 0 0 12px rgba(99, 102, 241, 0.2),
+        0 0 0 24px rgba(99, 102, 241, 0.1),
+        0 0 40px rgba(99, 102, 241, 0.3),
+        var(--shadow-lg);
+}
+
+.breathing-circle__instruction {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.breathing-circle__timer {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    font-family: var(--font-family-mono);
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    min-height: 1.2em;
+}
+
+.exercise__cycle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+    min-height: 1.5em;
+    font-family: var(--font-family-mono);
+}
+
+.exercise__controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-3);
+}
+
+/* Breathing animation pulse effect */
+@keyframes breathe-pulse {
+    0%, 100% {
+        box-shadow:
+            0 0 0 8px rgba(99, 102, 241, 0.1),
+            0 0 0 16px rgba(99, 102, 241, 0.05);
+    }
+    50% {
+        box-shadow:
+            0 0 0 16px rgba(99, 102, 241, 0.15),
+            0 0 0 32px rgba(99, 102, 241, 0.08);
+    }
+}
+
+.exercise--active .breathing-circle {
+    animation: breathe-pulse 4s ease-in-out infinite;
+}
+
+/* Screen reader only helper */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Mobile adjustments for exercises */
+@media (max-width: 480px) {
+    .exercise {
+        padding: var(--space-5);
+    }
+
+    .breathing-circle {
+        width: 140px;
+        height: 140px;
+    }
+
+    .breathing-circle__instruction {
+        font-size: var(--font-size-base);
+    }
+
+    .breathing-circle__timer {
+        font-size: var(--font-size-2xl);
+    }
+}

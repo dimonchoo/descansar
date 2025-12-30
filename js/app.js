@@ -8,6 +8,7 @@ import AdvancedMode from './modes/AdvancedMode.js';
 import Display from './ui/Display.js';
 import Controls from './ui/Controls.js';
 import Stats from './ui/Stats.js';
+import Exercises from './features/Exercises.js';
 import Storage from './core/Storage.js';
 import Notifications from './core/Notifications.js';
 import { MODES, THEMES, TIMER_STATES } from './utils/constants.js';
@@ -20,6 +21,7 @@ class App {
         this.display = null;
         this.controls = null;
         this.stats = null;
+        this.exercises = null;
         this.currentMode = MODES.SIMPLE;
         this.activeTimer = null;
     }
@@ -46,6 +48,10 @@ class App {
         this.controls = new Controls();
         this.stats = new Stats();
         this.stats.init();
+
+        // Ініціалізуємо вправи
+        this.exercises = new Exercises();
+        this.exercises.init();
 
         // Встановлюємо активний таймер
         this.activeTimer = this.simpleMode;

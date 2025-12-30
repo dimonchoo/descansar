@@ -278,6 +278,41 @@
                 </div>
             </section>
 
+            <!-- Breathing Exercises -->
+            <section class="exercise" id="exerciseContainer" aria-label="Дихальні вправи">
+                <h3 class="exercise__title">Дихальні вправи</h3>
+                <p class="exercise__subtitle">Розслабтесь під час перерви</p>
+
+                <div class="exercise__selector">
+                    <label for="exerciseType" class="sr-only">Оберіть техніку</label>
+                    <select id="exerciseType" class="exercise__select">
+                        <!-- Options will be populated by JS -->
+                    </select>
+                </div>
+
+                <p class="exercise__description" id="exerciseDescription"></p>
+
+                <div class="exercise__visual">
+                    <div class="breathing-circle" id="breathingCircle">
+                        <span class="breathing-circle__instruction" id="breathingInstruction">Натисніть старт</span>
+                        <span class="breathing-circle__timer" id="breathingTimer"></span>
+                    </div>
+                </div>
+
+                <div class="exercise__cycle" id="cycleCounter"></div>
+
+                <div class="exercise__controls">
+                    <button type="button" class="btn btn--primary" id="startExercise">
+                        <span class="btn__icon">▶</span>
+                        <span class="btn__text">Почати</span>
+                    </button>
+                    <button type="button" class="btn btn--secondary" id="stopExercise" style="display: none;">
+                        <span class="btn__icon">⏹</span>
+                        <span class="btn__text">Зупинити</span>
+                    </button>
+                </div>
+            </section>
+
             <!-- Global Statistics -->
             <section class="global-stats" id="globalStats" aria-label="Загальна статистика">
                 <h3 class="global-stats__title">Ваша статистика</h3>
