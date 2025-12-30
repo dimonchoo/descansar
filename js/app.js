@@ -11,6 +11,7 @@ import Stats from './ui/Stats.js';
 import Exercises from './features/Exercises.js';
 import EyeExercises from './features/EyeExercises.js';
 import Forest from './features/Forest.js';
+import AmbientSounds from './features/AmbientSounds.js';
 import Storage from './core/Storage.js';
 import Notifications from './core/Notifications.js';
 import { MODES, THEMES, TIMER_STATES } from './utils/constants.js';
@@ -26,6 +27,7 @@ class App {
         this.exercises = null;
         this.eyeExercises = null;
         this.forest = null;
+        this.ambientSounds = null;
         this.currentMode = MODES.SIMPLE;
         this.activeTimer = null;
     }
@@ -62,6 +64,9 @@ class App {
 
         this.forest = new Forest();
         this.forest.init();
+
+        this.ambientSounds = new AmbientSounds();
+        this.ambientSounds.init();
 
         // Встановлюємо активний таймер
         this.activeTimer = this.simpleMode;

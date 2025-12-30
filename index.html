@@ -347,6 +347,57 @@
                 </div>
             </section>
 
+            <!-- Ambient Sounds -->
+            <section class="ambient" id="ambientContainer" aria-label="Фонові звуки">
+                <h3 class="ambient__title">Фонові звуки</h3>
+                <p class="ambient__subtitle">Розслабляюча атмосфера для відпочинку</p>
+
+                <div class="ambient__sounds">
+                    <button type="button" class="ambient__btn" data-sound="rain">
+                        <span class="ambient__btn-icon">🌧️</span>
+                        <span class="ambient__btn-label">Дощ</span>
+                    </button>
+                    <button type="button" class="ambient__btn" data-sound="ocean">
+                        <span class="ambient__btn-icon">🌊</span>
+                        <span class="ambient__btn-label">Океан</span>
+                    </button>
+                    <button type="button" class="ambient__btn" data-sound="forest">
+                        <span class="ambient__btn-icon">🌲</span>
+                        <span class="ambient__btn-label">Ліс</span>
+                    </button>
+                    <button type="button" class="ambient__btn" data-sound="fire">
+                        <span class="ambient__btn-icon">🔥</span>
+                        <span class="ambient__btn-label">Камін</span>
+                    </button>
+                    <button type="button" class="ambient__btn" data-sound="wind">
+                        <span class="ambient__btn-icon">💨</span>
+                        <span class="ambient__btn-label">Вітер</span>
+                    </button>
+                    <button type="button" class="ambient__btn" data-sound="night">
+                        <span class="ambient__btn-icon">🌙</span>
+                        <span class="ambient__btn-label">Ніч</span>
+                    </button>
+                </div>
+
+                <div class="ambient__controls">
+                    <div class="ambient__current">
+                        <span class="ambient__current-label" id="currentAmbient">Оберіть звук</span>
+                    </div>
+                    <button type="button" class="btn btn--secondary btn--small" id="stopAmbient" style="display: none;">
+                        <span class="btn__icon">⏹</span>
+                        <span class="btn__text">Зупинити</span>
+                    </button>
+                </div>
+
+                <div class="ambient__volume">
+                    <label for="ambientVolume" class="ambient__volume-label">
+                        <span class="ambient__volume-icon">🔊</span>
+                        Гучність
+                    </label>
+                    <input type="range" id="ambientVolume" class="ambient__volume-slider" min="0" max="100" value="50">
+                </div>
+            </section>
+
             <!-- Virtual Forest -->
             <section class="forest" id="forestContainer" aria-label="Віртуальний ліс">
                 <h3 class="forest__title">Віртуальний ліс</h3>
