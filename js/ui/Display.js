@@ -19,6 +19,8 @@ class Display {
         };
 
         this.clockInterval = null;
+        this.originalTitle = document.title;
+        this.isRunning = false;
         this.init();
     }
 
@@ -60,10 +62,16 @@ class Display {
      * @param {string} phase - Поточна фаза
      */
     updateTimer(remainingSeconds, totalSeconds, phase) {
+        this.isRunning = true;
+        const timeStr = formatTime(remainingSeconds);
+
         // Оновлюємо час
         if (this.elements.timerDisplay) {
-            this.elements.timerDisplay.textContent = formatTime(remainingSeconds);
+            this.elements.timerDisplay.textContent = timeStr;
         }
+
+        // Оновлюємо title вкладки
+        this.updateTitle(timeStr, phase);
 
         // Оновлюємо прогрес
         this.updateProgress(remainingSeconds, totalSeconds);
@@ -73,6 +81,30 @@ class Display {
 
         // Оновлюємо лейбл фази
         this.updatePhaseLabel(phase);
+    }
+
+    /**
+     * Оновлює title сторінки
+     * @param {string} timeStr - Час у форматі MM:SS
+     * @param {string} phase - Тип фази
+     */
+    updateTitle(timeStr, phase) {
+        const phaseIcons = {
+            [PHASE_TYPES.WORK]: '💼',
+            [PHASE_TYPES.SHORT_BREAK]: '☕',
+            [PHASE_TYPES.LONG_BREAK]: '🧘',
+            [PHASE_TYPES.SIMPLE_BREAK]: '⏸️',
+        };
+        const icon = phaseIcons[phase] || '⏱️';
+        document.title = `${timeStr} ${icon} Descansar`;
+    }
+
+    /**
+     * Скидає title до оригінального
+     */
+    resetTitle() {
+        this.isRunning = false;
+        document.title = this.originalTitle;
     }
 
     /**
@@ -139,6 +171,9 @@ class Display {
 
         // Скидаємо прогрес
         this.updateProgress(totalSeconds, totalSeconds);
+
+        // Скидаємо title
+        this.resetTitle();
     }
 
     /**
@@ -159,6 +194,9 @@ class Display {
             };
             this.elements.timerLabel.textContent = messages[phase] || 'Завершено!';
         }
+
+        // Оновлюємо title з повідомленням про завершення
+        document.title = '🔔 Час! | Descansar';
     }
 
     /**
