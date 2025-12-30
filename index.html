@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 
     <!-- Primary Meta Tags -->
     <title>Descansar — Розумний таймер перерв для продуктивної роботи</title>
@@ -48,7 +51,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/main.css?v=2">
 
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
@@ -329,15 +332,16 @@
     </div>
 
     <!-- App Script -->
-    <script type="module" src="/js/app.js"></script>
+    <script type="module" src="/js/app.js?v=2"></script>
 
-    <!-- Service Worker Registration -->
+    <!-- Service Worker Registration (temporarily disabled for cache clearing) -->
     <script>
+        // Unregister old service workers to clear cache
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(reg => console.log('SW registered:', reg.scope))
-                    .catch(err => console.log('SW registration failed:', err));
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                }
             });
         }
     </script>
