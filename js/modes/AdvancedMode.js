@@ -6,8 +6,8 @@
 import Timer from '../core/Timer.js';
 import Storage from '../core/Storage.js';
 import Notifications from '../core/Notifications.js';
-import { PHASE_TYPES, TECHNIQUES, DEFAULTS } from '../utils/constants.js';
-import { validateNumber, VALIDATION } from '../utils/constants.js';
+import { PHASE_TYPES, TECHNIQUES, DEFAULTS, VALIDATION } from '../utils/constants.js';
+import { validateNumber } from '../utils/helpers.js';
 
 class AdvancedMode {
     constructor() {
