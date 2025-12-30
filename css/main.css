@@ -1220,3 +1220,384 @@ body {
         font-size: var(--font-size-2xl);
     }
 }
+
+/* ========================================
+   Eye Exercises
+   ======================================== */
+
+.eye-exercise {
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+}
+
+.eye-exercise__title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--space-1);
+}
+
+.eye-exercise__subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+}
+
+.eye-exercise__selector {
+    margin-bottom: var(--space-3);
+}
+
+.eye-exercise__select {
+    width: 100%;
+    max-width: 280px;
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--font-size-base);
+    font-family: inherit;
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-3) center;
+    padding-right: var(--space-8);
+}
+
+.eye-exercise__select:hover {
+    border-color: var(--color-primary);
+}
+
+.eye-exercise__select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.eye-exercise__description {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-4);
+    min-height: 1.5em;
+}
+
+.eye-exercise__visual-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: var(--space-4);
+    min-height: 120px;
+}
+
+.eye-visual {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    box-shadow:
+        0 0 0 6px rgba(16, 185, 129, 0.1),
+        0 0 0 12px rgba(16, 185, 129, 0.05),
+        var(--shadow-md);
+    transition: transform 0.5s ease, background 0.3s ease;
+}
+
+.eye-exercise--active .eye-visual {
+    animation: eye-pulse 2s ease-in-out infinite;
+}
+
+@keyframes eye-pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow:
+            0 0 0 6px rgba(16, 185, 129, 0.1),
+            0 0 0 12px rgba(16, 185, 129, 0.05);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow:
+            0 0 0 10px rgba(16, 185, 129, 0.15),
+            0 0 0 20px rgba(16, 185, 129, 0.08);
+    }
+}
+
+/* Visual states */
+.eye-visual--blink {
+    animation: blink-animation 0.3s ease-in-out infinite !important;
+}
+
+@keyframes blink-animation {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(0.1); }
+}
+
+.eye-visual--circle-right {
+    animation: circle-right 2s linear infinite !important;
+}
+
+@keyframes circle-right {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.eye-visual--circle-left {
+    animation: circle-left 2s linear infinite !important;
+}
+
+@keyframes circle-left {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}
+
+.eye-visual--focus-far {
+    transform: scale(0.8);
+    opacity: 0.7;
+}
+
+.eye-visual--focus-near {
+    transform: scale(1.2);
+}
+
+.eye-visual--dark {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+}
+
+.eye-visual--done {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.eye-exercise__instruction {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--space-2);
+    min-height: 1.5em;
+}
+
+.eye-exercise__timer {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    font-family: var(--font-family-mono);
+    color: var(--color-primary);
+    margin-bottom: var(--space-2);
+    min-height: 1.2em;
+}
+
+.eye-exercise__progress {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+    font-family: var(--font-family-mono);
+}
+
+.eye-exercise__controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-3);
+}
+
+/* Mobile adjustments for eye exercises */
+@media (max-width: 480px) {
+    .eye-exercise {
+        padding: var(--space-5);
+    }
+
+    .eye-visual {
+        width: 80px;
+        height: 80px;
+        font-size: 2.5rem;
+    }
+
+    .eye-exercise__instruction {
+        font-size: var(--font-size-base);
+    }
+
+    .eye-exercise__timer {
+        font-size: var(--font-size-2xl);
+    }
+}
+
+/* ========================================
+   Virtual Forest
+   ======================================== */
+
+.forest {
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    overflow: hidden;
+}
+
+.forest__title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--space-1);
+}
+
+.forest__subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+}
+
+.forest__scene {
+    position: relative;
+    height: 180px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: var(--space-4);
+}
+
+.forest__sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70%;
+    background: linear-gradient(180deg, #87CEEB 0%, #E0F4FF 100%);
+}
+
+[data-theme="dark"] .forest__sky {
+    background: linear-gradient(180deg, #1e3a5f 0%, #2d4a6f 100%);
+}
+
+.forest__tree-container {
+    position: absolute;
+    bottom: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.forest__tree {
+    font-size: 4rem;
+    transition: transform 1s ease-out;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.forest__tree--dead {
+    filter: grayscale(100%) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0) scale(var(--tree-scale, 1)); }
+    25% { transform: translateX(-5px) scale(var(--tree-scale, 1)); }
+    75% { transform: translateX(5px) scale(var(--tree-scale, 1)); }
+}
+
+.forest__tree--complete {
+    animation: celebrate 1s ease-in-out;
+}
+
+@keyframes celebrate {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.1) rotate(-5deg); }
+    50% { transform: scale(1.2); }
+    75% { transform: scale(1.1) rotate(5deg); }
+}
+
+.forest__ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    background: linear-gradient(180deg, #8B4513 0%, #654321 100%);
+}
+
+.forest__grass {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(180deg, #228B22 0%, #2E8B2E 100%);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+[data-theme="dark"] .forest__ground {
+    background: linear-gradient(180deg, #4a3728 0%, #3d2d22 100%);
+}
+
+[data-theme="dark"] .forest__grass {
+    background: linear-gradient(180deg, #1a5f1a 0%, #1e6b1e 100%);
+}
+
+.forest__progress-container {
+    margin-bottom: var(--space-3);
+}
+
+.forest__progress-bar {
+    height: 8px;
+    background: var(--color-bg);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.forest__progress-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+    border-radius: var(--radius-full);
+    transition: width 1s ease-out;
+}
+
+.forest__message {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-4);
+    min-height: 1.5em;
+}
+
+.forest__stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    background: var(--color-bg);
+    border-radius: var(--radius-lg);
+}
+
+.forest__stats-icon {
+    font-size: var(--font-size-xl);
+}
+
+.forest__stats-value {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    font-family: var(--font-family-mono);
+    color: var(--color-primary);
+}
+
+.forest__stats-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* Mobile adjustments for forest */
+@media (max-width: 480px) {
+    .forest {
+        padding: var(--space-5);
+    }
+
+    .forest__scene {
+        height: 150px;
+    }
+
+    .forest__tree {
+        font-size: 3rem;
+    }
+}

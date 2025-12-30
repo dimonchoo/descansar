@@ -9,6 +9,8 @@ import Display from './ui/Display.js';
 import Controls from './ui/Controls.js';
 import Stats from './ui/Stats.js';
 import Exercises from './features/Exercises.js';
+import EyeExercises from './features/EyeExercises.js';
+import Forest from './features/Forest.js';
 import Storage from './core/Storage.js';
 import Notifications from './core/Notifications.js';
 import { MODES, THEMES, TIMER_STATES } from './utils/constants.js';
@@ -22,6 +24,8 @@ class App {
         this.controls = null;
         this.stats = null;
         this.exercises = null;
+        this.eyeExercises = null;
+        this.forest = null;
         this.currentMode = MODES.SIMPLE;
         this.activeTimer = null;
     }
@@ -52,6 +56,12 @@ class App {
         // Ініціалізуємо вправи
         this.exercises = new Exercises();
         this.exercises.init();
+
+        this.eyeExercises = new EyeExercises();
+        this.eyeExercises.init();
+
+        this.forest = new Forest();
+        this.forest.init();
 
         // Встановлюємо активний таймер
         this.activeTimer = this.simpleMode;
@@ -266,6 +276,12 @@ class App {
         // Розблоковуємо аудіо при першій взаємодії
         Notifications.unlockAudio();
         this.activeTimer.start();
+
+        // Запускаємо ріст дерева
+        const totalSeconds = this.currentMode === MODES.SIMPLE
+            ? this.simpleMode.breakDuration * 60
+            : this.advancedMode.settings.workDuration * 60;
+        this.forest.startGrowing(totalSeconds);
     }
 
     /**
@@ -288,6 +304,11 @@ class App {
     handleReset() {
         this.activeTimer.reset();
 
+        // Зупиняємо ріст дерева (воно засохне)
+        if (this.forest.isActive()) {
+            this.forest.stop();
+        }
+
         if (this.currentMode === MODES.SIMPLE) {
             this.display.setInitialState(this.simpleMode.breakDuration);
         } else {
@@ -295,6 +316,9 @@ class App {
             this.display.setInitialState(this.advancedMode.settings.workDuration);
             this.display.updateSessionStats({ completedCycles: 0, totalWorkMinutes: 0 });
         }
+
+        // Скидаємо ліс для наступної перерви
+        setTimeout(() => this.forest.reset(), 2000);
     }
 
     /**
