@@ -13,6 +13,7 @@ class Notifications {
         this.sounds = {};
         this.enabled = true;
         this.soundEnabled = true;
+        this.wakeLock = null;
     }
 
     /**
@@ -149,7 +150,86 @@ class Notifications {
     }
 
     /**
-     * Сповіщення про завершення перерви
+     * Оновлює налаштування сповіщень
+     * @param {boolean} enabled - Чи увімкнені push
+     * @param {boolean} soundEnabled - Чи увімкнений звук
+     */
+    updateSettings(enabled, soundEnabled) {
+        this.enabled = enabled;
+        this.soundEnabled = soundEnabled;
+
+        Storage.updateSetting('enableNotifications', enabled);
+        Storage.updateSetting('enableSound', soundEnabled);
+    }
+
+    /**
+     * Перевіряє чи увімкнені сповіщення
+     * @returns {boolean}
+     */
+    isEnabled() {
+        return this.enabled && supportsNotifications() && Notification.permission === 'granted';
+    }
+
+    /**
+     * Перевіряє чи увімкнений звук
+     * @returns {boolean}
+     */
+    isSoundEnabled() {
+        return this.soundEnabled;
+    }
+
+    /**
+     * Вібрує пристрій (для мобільних)
+     * @param {number[]} pattern - Патерн вібрації [вібрація, пауза, вібрація...]
+     */
+    vibrate(pattern = [200, 100, 200, 100, 300]) {
+        if ('vibrate' in navigator) {
+            try {
+                navigator.vibrate(pattern);
+            } catch (e) {
+                console.warn('Vibration failed:', e);
+            }
+        }
+    }
+
+    /**
+     * Запитує Wake Lock щоб екран не засинав
+     */
+    async requestWakeLock() {
+        if ('wakeLock' in navigator) {
+            try {
+                this.wakeLock = await navigator.wakeLock.request('screen');
+                console.log('Wake Lock активовано');
+
+                // Перезапитуємо якщо сторінка знову стає видимою
+                document.addEventListener('visibilitychange', async () => {
+                    if (this.wakeLock !== null && document.visibilityState === 'visible') {
+                        this.wakeLock = await navigator.wakeLock.request('screen');
+                    }
+                });
+            } catch (e) {
+                console.warn('Wake Lock failed:', e);
+            }
+        }
+    }
+
+    /**
+     * Звільняє Wake Lock
+     */
+    async releaseWakeLock() {
+        if (this.wakeLock) {
+            try {
+                await this.wakeLock.release();
+                this.wakeLock = null;
+                console.log('Wake Lock деактивовано');
+            } catch (e) {
+                console.warn('Wake Lock release failed:', e);
+            }
+        }
+    }
+
+    /**
+     * Сповіщення про завершення з усіма ефектами
      * @param {string} phase - Тип фази
      */
     notifyPhaseComplete(phase) {
@@ -178,37 +258,13 @@ class Notifications {
 
         const message = messages[phase] || messages[PHASE_TYPES.SIMPLE_BREAK];
 
+        // Всі типи сповіщень
         this.showNotification(message.title, { body: message.body });
         this.playSound(message.sound);
-    }
+        this.vibrate(); // Вібрація для мобільних
 
-    /**
-     * Оновлює налаштування сповіщень
-     * @param {boolean} enabled - Чи увімкнені push
-     * @param {boolean} soundEnabled - Чи увімкнений звук
-     */
-    updateSettings(enabled, soundEnabled) {
-        this.enabled = enabled;
-        this.soundEnabled = soundEnabled;
-
-        Storage.updateSetting('enableNotifications', enabled);
-        Storage.updateSetting('enableSound', soundEnabled);
-    }
-
-    /**
-     * Перевіряє чи увімкнені сповіщення
-     * @returns {boolean}
-     */
-    isEnabled() {
-        return this.enabled && supportsNotifications() && Notification.permission === 'granted';
-    }
-
-    /**
-     * Перевіряє чи увімкнений звук
-     * @returns {boolean}
-     */
-    isSoundEnabled() {
-        return this.soundEnabled;
+        // Звільняємо Wake Lock після завершення
+        this.releaseWakeLock();
     }
 }
 
