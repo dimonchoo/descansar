@@ -278,6 +278,105 @@
                 </div>
             </section>
 
+            <!-- Breathing Exercises -->
+            <section class="exercise" id="exerciseContainer" aria-label="Дихальні вправи">
+                <h3 class="exercise__title">Дихальні вправи</h3>
+                <p class="exercise__subtitle">Розслабтесь під час перерви</p>
+
+                <div class="exercise__selector">
+                    <label for="exerciseType" class="sr-only">Оберіть техніку</label>
+                    <select id="exerciseType" class="exercise__select">
+                        <!-- Options will be populated by JS -->
+                    </select>
+                </div>
+
+                <p class="exercise__description" id="exerciseDescription"></p>
+
+                <div class="exercise__visual">
+                    <div class="breathing-circle" id="breathingCircle">
+                        <span class="breathing-circle__instruction" id="breathingInstruction">Натисніть старт</span>
+                        <span class="breathing-circle__timer" id="breathingTimer"></span>
+                    </div>
+                </div>
+
+                <div class="exercise__cycle" id="cycleCounter"></div>
+
+                <div class="exercise__controls">
+                    <button type="button" class="btn btn--primary" id="startExercise">
+                        <span class="btn__icon">▶</span>
+                        <span class="btn__text">Почати</span>
+                    </button>
+                    <button type="button" class="btn btn--secondary" id="stopExercise" style="display: none;">
+                        <span class="btn__icon">⏹</span>
+                        <span class="btn__text">Зупинити</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Eye Exercises -->
+            <section class="eye-exercise" id="eyeExerciseContainer" aria-label="Вправи для очей">
+                <h3 class="eye-exercise__title">Вправи для очей</h3>
+                <p class="eye-exercise__subtitle">Зніміть напругу та втому очей</p>
+
+                <div class="eye-exercise__selector">
+                    <label for="eyeExerciseType" class="sr-only">Оберіть вправу</label>
+                    <select id="eyeExerciseType" class="eye-exercise__select">
+                        <!-- Options will be populated by JS -->
+                    </select>
+                </div>
+
+                <p class="eye-exercise__description" id="eyeExerciseDescription"></p>
+
+                <div class="eye-exercise__visual-container">
+                    <div class="eye-visual" id="eyeVisual">👁️</div>
+                </div>
+
+                <div class="eye-exercise__instruction" id="eyeInstruction">Натисніть старт</div>
+                <div class="eye-exercise__timer" id="eyeTimer"></div>
+                <div class="eye-exercise__progress" id="eyeProgress" style="display: none;"></div>
+
+                <div class="eye-exercise__controls">
+                    <button type="button" class="btn btn--primary" id="startEyeExercise">
+                        <span class="btn__icon">▶</span>
+                        <span class="btn__text">Почати</span>
+                    </button>
+                    <button type="button" class="btn btn--secondary" id="stopEyeExercise" style="display: none;">
+                        <span class="btn__icon">⏹</span>
+                        <span class="btn__text">Зупинити</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Virtual Forest -->
+            <section class="forest" id="forestContainer" aria-label="Віртуальний ліс">
+                <h3 class="forest__title">Віртуальний ліс</h3>
+                <p class="forest__subtitle">Вирощуйте дерева під час перерв</p>
+
+                <div class="forest__scene">
+                    <div class="forest__sky"></div>
+                    <div class="forest__tree-container">
+                        <div class="forest__tree" id="forestTree">🌱</div>
+                    </div>
+                    <div class="forest__ground" id="forestGround">
+                        <div class="forest__grass"></div>
+                    </div>
+                </div>
+
+                <div class="forest__progress-container">
+                    <div class="forest__progress-bar">
+                        <div class="forest__progress-fill" id="forestProgress"></div>
+                    </div>
+                </div>
+
+                <p class="forest__message" id="forestMessage">Почніть перерву щоб виростити дерево</p>
+
+                <div class="forest__stats">
+                    <span class="forest__stats-icon">🌲</span>
+                    <span class="forest__stats-value" id="forestTreeCount">0</span>
+                    <span class="forest__stats-label">дерев вирощено</span>
+                </div>
+            </section>
+
             <!-- Global Statistics -->
             <section class="global-stats" id="globalStats" aria-label="Загальна статистика">
                 <h3 class="global-stats__title">Ваша статистика</h3>
