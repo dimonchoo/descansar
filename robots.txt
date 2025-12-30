@@ -1,0 +1,12 @@
+# Descansar - Robots.txt
+# https://descansar.pages.dev
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://descansar.pages.dev/sitemap.xml
+
+# Disallow service worker and manifest from indexing
+Disallow: /sw.js
+Disallow: /manifest.json
