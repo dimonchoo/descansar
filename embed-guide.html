@@ -200,6 +200,43 @@
         .back-link:hover {
             text-decoration: underline;
         }
+
+        .generator__method-selector {
+            display: flex;
+            gap: var(--space-2);
+            margin-bottom: var(--space-4);
+            padding: var(--space-1);
+            background: var(--color-bg-tertiary);
+            border-radius: var(--radius-lg);
+        }
+
+        .generator__method-btn {
+            flex: 1;
+            padding: var(--space-3);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .generator__method-btn:hover {
+            color: var(--color-text);
+        }
+
+        .generator__method-btn--active {
+            background: var(--color-bg-secondary);
+            color: var(--color-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .generator__field--iframe-only.generator__field--hidden,
+        .generator__checkbox.generator__field--iframe-only.generator__field--hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -217,6 +254,16 @@
             <p class="guide__text">Налаштуйте параметри та скопіюйте готовий код для вставки.</p>
 
             <div class="generator">
+                <!-- Method selector -->
+                <div class="generator__method-selector">
+                    <button type="button" class="generator__method-btn generator__method-btn--active" data-method="script">
+                        JavaScript (рекомендовано)
+                    </button>
+                    <button type="button" class="generator__method-btn" data-method="iframe">
+                        iframe
+                    </button>
+                </div>
+
                 <div class="generator__row">
                     <div class="generator__field">
                         <label class="generator__label" for="genDuration">Тривалість (хв)</label>
@@ -229,11 +276,11 @@
                             <option value="dark">Темна</option>
                         </select>
                     </div>
-                    <div class="generator__field">
+                    <div class="generator__field generator__field--iframe-only">
                         <label class="generator__label" for="genWidth">Ширина</label>
                         <input type="text" id="genWidth" class="generator__input" value="100%" placeholder="400px або 100%">
                     </div>
-                    <div class="generator__field">
+                    <div class="generator__field generator__field--iframe-only">
                         <label class="generator__label" for="genHeight">Висота</label>
                         <input type="text" id="genHeight" class="generator__input" value="450px" placeholder="450px">
                     </div>
@@ -244,7 +291,7 @@
                         <input type="checkbox" id="genCompact">
                         <span>Компактний режим</span>
                     </label>
-                    <label class="generator__checkbox">
+                    <label class="generator__checkbox generator__field--iframe-only">
                         <input type="checkbox" id="genTransparent">
                         <span>Прозорий фон</span>
                     </label>
@@ -268,6 +315,7 @@
                 <h3 style="margin-top: var(--space-6); margin-bottom: var(--space-3);">Попередній перегляд</h3>
                 <div class="preview">
                     <div class="preview__label">Попередній перегляд</div>
+                    <div id="scriptPreview" style="display: none; padding: var(--space-4);"></div>
                     <iframe id="previewFrame" height="400"></iframe>
                 </div>
             </div>
@@ -276,7 +324,18 @@
         <!-- Basic usage -->
         <section class="guide__section">
             <h2 class="guide__section-title">Базове використання</h2>
-            <p class="guide__text">Найпростіший спосіб вбудувати таймер - використати iframe:</p>
+
+            <h3 style="margin-bottom: var(--space-3);">Спосіб 1: JavaScript (рекомендовано)</h3>
+            <p class="guide__text">Найкращий спосіб - використати JavaScript скрипт. Віджет інтегрується безпосередньо на вашу сторінку:</p>
+
+            <div class="code-block">
+                <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
+                <code>&lt;div id="descansar-timer"&gt;&lt;/div&gt;
+&lt;script src="https://descansar.pages.dev/js/embed.js"&gt;&lt;/script&gt;</code>
+            </div>
+
+            <h3 style="margin-bottom: var(--space-3); margin-top: var(--space-6);">Спосіб 2: iframe</h3>
+            <p class="guide__text">Альтернативний спосіб - використати iframe:</p>
 
             <div class="code-block">
                 <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
@@ -290,9 +349,77 @@
             </div>
         </section>
 
-        <!-- Parameters -->
+        <!-- Script Parameters -->
         <section class="guide__section">
-            <h2 class="guide__section-title">Параметри URL</h2>
+            <h2 class="guide__section-title">Параметри JavaScript</h2>
+            <p class="guide__text">Налаштуйте таймер за допомогою data-атрибутів:</p>
+
+            <table class="params-table">
+                <thead>
+                    <tr>
+                        <th>Атрибут</th>
+                        <th>Опис</th>
+                        <th>Значення</th>
+                        <th>За замовчуванням</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>data-container</code></td>
+                        <td>CSS селектор контейнера</td>
+                        <td>Будь-який селектор</td>
+                        <td>#descansar-timer</td>
+                    </tr>
+                    <tr>
+                        <td><code>data-duration</code></td>
+                        <td>Тривалість перерви в хвилинах</td>
+                        <td>1-480</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td><code>data-theme</code></td>
+                        <td>Кольорова тема</td>
+                        <td>light, dark</td>
+                        <td>light</td>
+                    </tr>
+                    <tr>
+                        <td><code>data-compact</code></td>
+                        <td>Компактний режим</td>
+                        <td>true, false</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td><code>data-branding</code></td>
+                        <td>Показувати брендинг</td>
+                        <td>true, false</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td><code>data-autostart</code></td>
+                        <td>Автоматичний старт</td>
+                        <td>true, false</td>
+                        <td>false</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="guide__text">Приклад з параметрами:</p>
+
+            <div class="code-block">
+                <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
+                <code>&lt;div id="descansar-timer"&gt;&lt;/div&gt;
+&lt;script
+  src="https://descansar.pages.dev/js/embed.js"
+  data-duration="25"
+  data-theme="dark"
+  data-compact="true"
+&gt;&lt;/script&gt;</code>
+            </div>
+        </section>
+
+        <!-- URL Parameters -->
+        <section class="guide__section">
+            <h2 class="guide__section-title">Параметри URL (для iframe)</h2>
             <p class="guide__text">Налаштуйте таймер за допомогою параметрів URL:</p>
 
             <table class="params-table">
@@ -360,7 +487,64 @@
         <!-- JavaScript API -->
         <section class="guide__section">
             <h2 class="guide__section-title">JavaScript API</h2>
-            <p class="guide__text">Керуйте таймером програмно через postMessage:</p>
+
+            <h3 style="margin-bottom: var(--space-3);">Для JavaScript віджета</h3>
+            <p class="guide__text">Керуйте таймером напряму через глобальний об'єкт:</p>
+
+            <div class="code-block">
+                <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
+                <code>// Глобальний об'єкт віджета
+const timer = window.descansar;
+
+// Запустити таймер
+timer.start();
+
+// Поставити на паузу
+timer.pause();
+
+// Продовжити
+timer.resume();
+
+// Скинути
+timer.reset();
+
+// Змінити тривалість (в хвилинах)
+timer.setDuration(30);</code>
+            </div>
+
+            <p class="guide__text">Слухайте події від таймера:</p>
+
+            <div class="code-block">
+                <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
+                <code>window.addEventListener('descansar', (event) => {
+  const { event: eventName, duration } = event.detail;
+
+  switch (eventName) {
+    case 'ready':
+      console.log('Таймер готовий, тривалість:', duration);
+      break;
+    case 'start':
+      console.log('Таймер запущено');
+      break;
+    case 'pause':
+      console.log('Таймер на паузі');
+      break;
+    case 'resume':
+      console.log('Таймер продовжено');
+      break;
+    case 'complete':
+      console.log('Перерва завершена!');
+      // Показати сповіщення, відтворити звук і т.д.
+      break;
+    case 'reset':
+      console.log('Таймер скинуто');
+      break;
+  }
+});</code>
+            </div>
+
+            <h3 style="margin-bottom: var(--space-3); margin-top: var(--space-6);">Для iframe</h3>
+            <p class="guide__text">Керуйте таймером через postMessage:</p>
 
             <div class="code-block">
                 <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
@@ -383,7 +567,7 @@ iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'reset' },
 iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'setDuration', duration: 30 }, '*');</code>
             </div>
 
-            <p class="guide__text">Слухайте події від таймера:</p>
+            <p class="guide__text">Слухайте події від iframe:</p>
 
             <div class="code-block">
                 <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
@@ -397,19 +581,10 @@ iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'setDurati
     case 'start':
       console.log('Таймер запущено');
       break;
-    case 'pause':
-      console.log('Таймер на паузі');
-      break;
-    case 'resume':
-      console.log('Таймер продовжено');
-      break;
     case 'complete':
       console.log('Перерва завершена!');
-      // Показати сповіщення, відтворити звук і т.д.
       break;
-    case 'reset':
-      console.log('Таймер скинуто');
-      break;
+    // ... інші події
   }
 });</code>
             </div>
@@ -434,6 +609,29 @@ iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'setDurati
     </div>
 
     <script>
+        let currentMethod = 'script';
+
+        // Method selector
+        document.querySelectorAll('.generator__method-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.generator__method-btn').forEach(b => b.classList.remove('generator__method-btn--active'));
+                btn.classList.add('generator__method-btn--active');
+                currentMethod = btn.dataset.method;
+
+                // Toggle iframe-only fields
+                document.querySelectorAll('.generator__field--iframe-only').forEach(field => {
+                    field.classList.toggle('generator__field--hidden', currentMethod === 'script');
+                });
+
+                generateCode();
+            });
+        });
+
+        // Initially hide iframe-only fields
+        document.querySelectorAll('.generator__field--iframe-only').forEach(field => {
+            field.classList.add('generator__field--hidden');
+        });
+
         // Code generator
         function generateCode() {
             const duration = document.getElementById('genDuration').value;
@@ -445,20 +643,39 @@ iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'setDurati
             const branding = document.getElementById('genBranding').checked;
             const autostart = document.getElementById('genAutostart').checked;
 
-            // Build URL
-            const params = new URLSearchParams();
-            if (duration !== '15') params.set('duration', duration);
-            if (theme !== 'light') params.set('theme', theme);
-            if (compact) params.set('compact', 'true');
-            if (transparent) params.set('transparent', 'true');
-            if (!branding) params.set('branding', 'false');
-            if (autostart) params.set('autostart', 'true');
+            let code = '';
 
-            const queryString = params.toString();
-            const baseUrl = 'https://descansar.pages.dev/embed.html';
-            const fullUrl = queryString ? `${baseUrl}?${queryString}` : baseUrl;
+            if (currentMethod === 'script') {
+                // Build data attributes
+                let attrs = [];
+                if (duration !== '15') attrs.push(`data-duration="${duration}"`);
+                if (theme !== 'light') attrs.push(`data-theme="${theme}"`);
+                if (compact) attrs.push('data-compact="true"');
+                if (!branding) attrs.push('data-branding="false"');
+                if (autostart) attrs.push('data-autostart="true"');
 
-            const code = `<iframe
+                const attrsStr = attrs.length > 0 ? '\n  ' + attrs.join('\n  ') + '\n' : '';
+
+                code = `<div id="descansar-timer"></div>
+<script src="https://descansar.pages.dev/js/embed.js"${attrsStr}><\/script>`;
+
+                // Update preview with script
+                updateScriptPreview({ duration, theme, compact, branding, autostart });
+            } else {
+                // Build URL params
+                const params = new URLSearchParams();
+                if (duration !== '15') params.set('duration', duration);
+                if (theme !== 'light') params.set('theme', theme);
+                if (compact) params.set('compact', 'true');
+                if (transparent) params.set('transparent', 'true');
+                if (!branding) params.set('branding', 'false');
+                if (autostart) params.set('autostart', 'true');
+
+                const queryString = params.toString();
+                const baseUrl = 'https://descansar.pages.dev/embed.html';
+                const fullUrl = queryString ? `${baseUrl}?${queryString}` : baseUrl;
+
+                code = `<iframe
   src="${fullUrl}"
   width="${width}"
   height="${height}"
@@ -466,12 +683,43 @@ iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'setDurati
   allow="autoplay"
 ></iframe>`;
 
-            document.getElementById('generatedCode').textContent = code;
+                // Update preview with iframe
+                const previewUrl = queryString ? `/embed.html?${queryString}` : '/embed.html';
+                document.getElementById('scriptPreview').style.display = 'none';
+                document.getElementById('previewFrame').style.display = 'block';
+                document.getElementById('previewFrame').src = previewUrl;
+                document.getElementById('previewFrame').style.height = height;
+            }
 
-            // Update preview
-            const previewUrl = queryString ? `/embed.html?${queryString}` : '/embed.html';
-            document.getElementById('previewFrame').src = previewUrl;
-            document.getElementById('previewFrame').style.height = height;
+            document.getElementById('generatedCode').textContent = code;
+        }
+
+        function updateScriptPreview(opts) {
+            const scriptPreview = document.getElementById('scriptPreview');
+            const iframePreview = document.getElementById('previewFrame');
+
+            iframePreview.style.display = 'none';
+            scriptPreview.style.display = 'block';
+
+            // Clear previous widget
+            scriptPreview.innerHTML = '<div id="preview-timer"></div>';
+
+            // Remove old script if exists
+            const oldScript = document.getElementById('preview-embed-script');
+            if (oldScript) oldScript.remove();
+
+            // Create and add script
+            const script = document.createElement('script');
+            script.id = 'preview-embed-script';
+            script.src = '/js/embed.js';
+            script.setAttribute('data-container', '#preview-timer');
+            if (opts.duration !== '15') script.setAttribute('data-duration', opts.duration);
+            if (opts.theme !== 'light') script.setAttribute('data-theme', opts.theme);
+            if (opts.compact) script.setAttribute('data-compact', 'true');
+            if (!opts.branding) script.setAttribute('data-branding', 'false');
+            if (opts.autostart) script.setAttribute('data-autostart', 'true');
+
+            scriptPreview.appendChild(script);
         }
 
         function copyCode() {
