@@ -7,11 +7,6 @@ import SimpleMode from './modes/SimpleMode.js';
 import AdvancedMode from './modes/AdvancedMode.js';
 import Display from './ui/Display.js';
 import Controls from './ui/Controls.js';
-import Stats from './ui/Stats.js';
-import Exercises from './features/Exercises.js';
-import EyeExercises from './features/EyeExercises.js';
-import Forest from './features/Forest.js';
-import AmbientSounds from './features/AmbientSounds.js';
 import lottieAnimations from './features/LottieAnimations.js';
 import Storage from './core/Storage.js';
 import Notifications from './core/Notifications.js';
@@ -24,11 +19,6 @@ class App {
         this.advancedMode = null;
         this.display = null;
         this.controls = null;
-        this.stats = null;
-        this.exercises = null;
-        this.eyeExercises = null;
-        this.forest = null;
-        this.ambientSounds = null;
         this.currentMode = MODES.SIMPLE;
         this.activeTimer = null;
     }
@@ -53,21 +43,6 @@ class App {
         // Ініціалізуємо UI
         this.display = new Display();
         this.controls = new Controls();
-        this.stats = new Stats();
-        this.stats.init();
-
-        // Ініціалізуємо вправи
-        this.exercises = new Exercises();
-        this.exercises.init();
-
-        this.eyeExercises = new EyeExercises();
-        this.eyeExercises.init();
-
-        this.forest = new Forest();
-        this.forest.init();
-
-        this.ambientSounds = new AmbientSounds();
-        this.ambientSounds.init();
 
         // Встановлюємо активний таймер
         this.activeTimer = this.simpleMode;
@@ -143,8 +118,7 @@ class App {
         this.simpleMode.onComplete = () => {
             this.display.showCompleted(this.simpleMode.timer.currentPhase);
             this.controls.updateState(TIMER_STATES.COMPLETED);
-            this.stats.update(); // Оновлюємо статистику
-            this.showCelebration(); // Показуємо анімацію святкування
+            this.showCelebration();
         };
 
         this.simpleMode.onStateChange = (data) => {
@@ -166,7 +140,6 @@ class App {
                 completedCycles: data.completedCycles,
                 totalWorkMinutes: data.totalWorkMinutes,
             });
-            this.stats.update(); // Оновлюємо статистику
         };
 
         this.advancedMode.onPhaseChange = (data) => {
@@ -283,12 +256,6 @@ class App {
         // Розблоковуємо аудіо при першій взаємодії
         Notifications.unlockAudio();
         this.activeTimer.start();
-
-        // Запускаємо ріст дерева
-        const totalSeconds = this.currentMode === MODES.SIMPLE
-            ? this.simpleMode.breakDuration * 60
-            : this.advancedMode.settings.workDuration * 60;
-        this.forest.startGrowing(totalSeconds);
     }
 
     /**
@@ -311,11 +278,6 @@ class App {
     handleReset() {
         this.activeTimer.reset();
 
-        // Зупиняємо ріст дерева (воно засохне)
-        if (this.forest.isActive()) {
-            this.forest.stop();
-        }
-
         if (this.currentMode === MODES.SIMPLE) {
             this.display.setInitialState(this.simpleMode.breakDuration);
         } else {
@@ -323,9 +285,6 @@ class App {
             this.display.setInitialState(this.advancedMode.settings.workDuration);
             this.display.updateSessionStats({ completedCycles: 0, totalWorkMinutes: 0 });
         }
-
-        // Скидаємо ліс для наступної перерви
-        setTimeout(() => this.forest.reset(), 2000);
     }
 
     /**
