@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вбудувати таймер | Descansar</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <style>
+        .guide {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--space-6);
+        }
+
+        .guide__header {
+            text-align: center;
+            margin-bottom: var(--space-8);
+        }
+
+        .guide__title {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: var(--space-2);
+        }
+
+        .guide__subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--color-text-secondary);
+        }
+
+        .guide__section {
+            margin-bottom: var(--space-8);
+        }
+
+        .guide__section-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: var(--space-4);
+            padding-bottom: var(--space-2);
+            border-bottom: 2px solid var(--color-border);
+        }
+
+        .guide__text {
+            color: var(--color-text-secondary);
+            line-height: 1.7;
+            margin-bottom: var(--space-4);
+        }
+
+        .code-block {
+            background: var(--color-bg-tertiary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-4);
+            overflow-x: auto;
+            margin-bottom: var(--space-4);
+            position: relative;
+        }
+
+        .code-block code {
+            font-family: var(--font-family-mono);
+            font-size: var(--font-size-sm);
+            color: var(--color-text);
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .code-block__copy {
+            position: absolute;
+            top: var(--space-2);
+            right: var(--space-2);
+            padding: var(--space-2) var(--space-3);
+            font-size: var(--font-size-xs);
+            background: var(--color-bg-secondary);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .code-block__copy:hover {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .params-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: var(--space-4);
+        }
+
+        .params-table th,
+        .params-table td {
+            padding: var(--space-3);
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .params-table th {
+            font-weight: 600;
+            color: var(--color-text);
+            background: var(--color-bg-tertiary);
+        }
+
+        .params-table td {
+            color: var(--color-text-secondary);
+        }
+
+        .params-table code {
+            font-family: var(--font-family-mono);
+            font-size: var(--font-size-sm);
+            background: var(--color-bg-tertiary);
+            padding: var(--space-1) var(--space-2);
+            border-radius: var(--radius-sm);
+        }
+
+        .preview {
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: var(--space-4);
+        }
+
+        .preview iframe {
+            display: block;
+            width: 100%;
+            border: none;
+        }
+
+        .preview__label {
+            padding: var(--space-2) var(--space-3);
+            background: var(--color-bg-tertiary);
+            font-size: var(--font-size-sm);
+            color: var(--color-text-muted);
+        }
+
+        .generator {
+            background: var(--color-bg-secondary);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+            box-shadow: var(--shadow-md);
+        }
+
+        .generator__row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-4);
+        }
+
+        .generator__field {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+
+        .generator__label {
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            color: var(--color-text);
+        }
+
+        .generator__input,
+        .generator__select {
+            padding: var(--space-3);
+            font-size: var(--font-size-base);
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-md);
+            background: var(--color-bg);
+            color: var(--color-text);
+        }
+
+        .generator__checkbox {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            cursor: pointer;
+        }
+
+        .generator__checkbox input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--color-primary);
+        }
+
+        .generator__result {
+            margin-top: var(--space-4);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            color: var(--color-primary);
+            text-decoration: none;
+            margin-bottom: var(--space-4);
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="guide">
+        <a href="/" class="back-link">← Назад до Descansar</a>
+
+        <header class="guide__header">
+            <h1 class="guide__title">Вбудувати таймер</h1>
+            <p class="guide__subtitle">Додайте таймер перерв на свій сайт за кілька хвилин</p>
+        </header>
+
+        <!-- Generator -->
+        <section class="guide__section">
+            <h2 class="guide__section-title">Генератор коду</h2>
+            <p class="guide__text">Налаштуйте параметри та скопіюйте готовий код для вставки.</p>
+
+            <div class="generator">
+                <div class="generator__row">
+                    <div class="generator__field">
+                        <label class="generator__label" for="genDuration">Тривалість (хв)</label>
+                        <input type="number" id="genDuration" class="generator__input" value="15" min="1" max="480">
+                    </div>
+                    <div class="generator__field">
+                        <label class="generator__label" for="genTheme">Тема</label>
+                        <select id="genTheme" class="generator__select">
+                            <option value="light">Світла</option>
+                            <option value="dark">Темна</option>
+                        </select>
+                    </div>
+                    <div class="generator__field">
+                        <label class="generator__label" for="genWidth">Ширина</label>
+                        <input type="text" id="genWidth" class="generator__input" value="100%" placeholder="400px або 100%">
+                    </div>
+                    <div class="generator__field">
+                        <label class="generator__label" for="genHeight">Висота</label>
+                        <input type="text" id="genHeight" class="generator__input" value="450px" placeholder="450px">
+                    </div>
+                </div>
+
+                <div class="generator__row">
+                    <label class="generator__checkbox">
+                        <input type="checkbox" id="genCompact">
+                        <span>Компактний режим</span>
+                    </label>
+                    <label class="generator__checkbox">
+                        <input type="checkbox" id="genTransparent">
+                        <span>Прозорий фон</span>
+                    </label>
+                    <label class="generator__checkbox">
+                        <input type="checkbox" id="genBranding" checked>
+                        <span>Показувати брендинг</span>
+                    </label>
+                    <label class="generator__checkbox">
+                        <input type="checkbox" id="genAutostart">
+                        <span>Автостарт</span>
+                    </label>
+                </div>
+
+                <div class="generator__result">
+                    <div class="code-block">
+                        <button class="code-block__copy" onclick="copyCode()">Копіювати</button>
+                        <code id="generatedCode"></code>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: var(--space-6); margin-bottom: var(--space-3);">Попередній перегляд</h3>
+                <div class="preview">
+                    <div class="preview__label">Попередній перегляд</div>
+                    <iframe id="previewFrame" height="400"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- Basic usage -->
+        <section class="guide__section">
+            <h2 class="guide__section-title">Базове використання</h2>
+            <p class="guide__text">Найпростіший спосіб вбудувати таймер - використати iframe:</p>
+
+            <div class="code-block">
+                <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
+                <code>&lt;iframe
+  src="https://descansar.pages.dev/embed.html"
+  width="100%"
+  height="450"
+  frameborder="0"
+  allow="autoplay"
+&gt;&lt;/iframe&gt;</code>
+            </div>
+        </section>
+
+        <!-- Parameters -->
+        <section class="guide__section">
+            <h2 class="guide__section-title">Параметри URL</h2>
+            <p class="guide__text">Налаштуйте таймер за допомогою параметрів URL:</p>
+
+            <table class="params-table">
+                <thead>
+                    <tr>
+                        <th>Параметр</th>
+                        <th>Опис</th>
+                        <th>Значення</th>
+                        <th>За замовчуванням</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>duration</code></td>
+                        <td>Тривалість перерви в хвилинах</td>
+                        <td>1-480</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td><code>theme</code></td>
+                        <td>Кольорова тема</td>
+                        <td>light, dark</td>
+                        <td>light</td>
+                    </tr>
+                    <tr>
+                        <td><code>compact</code></td>
+                        <td>Компактний режим без зайвих елементів</td>
+                        <td>true, false</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td><code>transparent</code></td>
+                        <td>Прозорий фон</td>
+                        <td>true, false</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td><code>branding</code></td>
+                        <td>Показувати лого Descansar</td>
+                        <td>true, false</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td><code>autostart</code></td>
+                        <td>Автоматичний старт таймера</td>
+                        <td>true, false</td>
+                        <td>false</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="guide__text">Приклад з параметрами:</p>
+
+            <div class="code-block">
+                <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
+                <code>&lt;iframe
+  src="https://descansar.pages.dev/embed.html?duration=25&theme=dark&compact=true"
+  width="300"
+  height="350"
+  frameborder="0"
+&gt;&lt;/iframe&gt;</code>
+            </div>
+        </section>
+
+        <!-- JavaScript API -->
+        <section class="guide__section">
+            <h2 class="guide__section-title">JavaScript API</h2>
+            <p class="guide__text">Керуйте таймером програмно через postMessage:</p>
+
+            <div class="code-block">
+                <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
+                <code>// Отримати iframe
+const iframe = document.querySelector('iframe');
+
+// Запустити таймер
+iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'start' }, '*');
+
+// Поставити на паузу
+iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'pause' }, '*');
+
+// Продовжити
+iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'resume' }, '*');
+
+// Скинути
+iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'reset' }, '*');
+
+// Змінити тривалість (в хвилинах)
+iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'setDuration', duration: 30 }, '*');</code>
+            </div>
+
+            <p class="guide__text">Слухайте події від таймера:</p>
+
+            <div class="code-block">
+                <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
+                <code>window.addEventListener('message', (event) => {
+  if (event.data?.source !== 'descansar-embed') return;
+
+  switch (event.data.event) {
+    case 'ready':
+      console.log('Таймер готовий, тривалість:', event.data.duration);
+      break;
+    case 'start':
+      console.log('Таймер запущено');
+      break;
+    case 'pause':
+      console.log('Таймер на паузі');
+      break;
+    case 'resume':
+      console.log('Таймер продовжено');
+      break;
+    case 'complete':
+      console.log('Перерва завершена!');
+      // Показати сповіщення, відтворити звук і т.д.
+      break;
+    case 'reset':
+      console.log('Таймер скинуто');
+      break;
+  }
+});</code>
+            </div>
+        </section>
+
+        <!-- Examples -->
+        <section class="guide__section">
+            <h2 class="guide__section-title">Приклади</h2>
+
+            <h3 style="margin-bottom: var(--space-3);">Компактний темний таймер</h3>
+            <div class="preview">
+                <div class="preview__label">duration=10&theme=dark&compact=true</div>
+                <iframe src="/embed.html?duration=10&theme=dark&compact=true" height="300"></iframe>
+            </div>
+
+            <h3 style="margin-bottom: var(--space-3); margin-top: var(--space-6);">Стандартний світлий таймер</h3>
+            <div class="preview">
+                <div class="preview__label">duration=15&theme=light</div>
+                <iframe src="/embed.html?duration=15&theme=light" height="400"></iframe>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Code generator
+        function generateCode() {
+            const duration = document.getElementById('genDuration').value;
+            const theme = document.getElementById('genTheme').value;
+            const width = document.getElementById('genWidth').value;
+            const height = document.getElementById('genHeight').value;
+            const compact = document.getElementById('genCompact').checked;
+            const transparent = document.getElementById('genTransparent').checked;
+            const branding = document.getElementById('genBranding').checked;
+            const autostart = document.getElementById('genAutostart').checked;
+
+            // Build URL
+            const params = new URLSearchParams();
+            if (duration !== '15') params.set('duration', duration);
+            if (theme !== 'light') params.set('theme', theme);
+            if (compact) params.set('compact', 'true');
+            if (transparent) params.set('transparent', 'true');
+            if (!branding) params.set('branding', 'false');
+            if (autostart) params.set('autostart', 'true');
+
+            const queryString = params.toString();
+            const baseUrl = 'https://descansar.pages.dev/embed.html';
+            const fullUrl = queryString ? `${baseUrl}?${queryString}` : baseUrl;
+
+            const code = `<iframe
+  src="${fullUrl}"
+  width="${width}"
+  height="${height}"
+  frameborder="0"
+  allow="autoplay"
+></iframe>`;
+
+            document.getElementById('generatedCode').textContent = code;
+
+            // Update preview
+            const previewUrl = queryString ? `/embed.html?${queryString}` : '/embed.html';
+            document.getElementById('previewFrame').src = previewUrl;
+            document.getElementById('previewFrame').style.height = height;
+        }
+
+        function copyCode() {
+            const code = document.getElementById('generatedCode').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.querySelector('.generator .code-block__copy');
+                btn.textContent = 'Скопійовано!';
+                setTimeout(() => btn.textContent = 'Копіювати', 2000);
+            });
+        }
+
+        function copyToClipboard(button) {
+            const code = button.parentElement.querySelector('code').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = 'Скопійовано!';
+                setTimeout(() => button.textContent = 'Копіювати', 2000);
+            });
+        }
+
+        // Listen for changes
+        ['genDuration', 'genTheme', 'genWidth', 'genHeight', 'genCompact', 'genTransparent', 'genBranding', 'genAutostart'].forEach(id => {
+            document.getElementById(id).addEventListener('change', generateCode);
+            document.getElementById(id).addEventListener('input', generateCode);
+        });
+
+        // Initial generation
+        generateCode();
+    </script>
+</body>
+</html>
