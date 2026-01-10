@@ -21,6 +21,7 @@ class Display {
         this.clockInterval = null;
         this.originalTitle = document.title;
         this.isRunning = false;
+        this.currentDurationMinutes = null; // Зберігаємо тривалість для оновлення часу повернення
         this.init();
     }
 
@@ -52,6 +53,12 @@ class Display {
     updateClock() {
         if (this.elements.currentTime) {
             this.elements.currentTime.textContent = formatTimeHHMM(new Date());
+        }
+
+        // Оновлюємо час повернення коли таймер не запущений
+        if (!this.isRunning && this.currentDurationMinutes && this.elements.returnTime) {
+            const returnDate = calculateReturnTime(this.currentDurationMinutes);
+            this.elements.returnTime.textContent = formatTimeHHMM(returnDate);
         }
     }
 
@@ -154,6 +161,7 @@ class Display {
      * @param {number} durationMinutes - Тривалість в хвилинах
      */
     setInitialState(durationMinutes) {
+        this.currentDurationMinutes = durationMinutes; // Зберігаємо для оновлення часу повернення
         const totalSeconds = durationMinutes * 60;
 
         if (this.elements.timerDisplay) {
