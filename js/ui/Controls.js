@@ -5,6 +5,7 @@
 
 import { $, on, toggleClass, validateBreakDuration, debounce } from '../utils/helpers.js';
 import { TIMER_STATES, MODES } from '../utils/constants.js';
+import { t } from '../utils/i18n.js';
 
 class Controls {
     constructor() {
@@ -272,13 +273,13 @@ class Controls {
             const btnIcon = this.elements.startBtn.querySelector('.btn__icon');
 
             if (isIdle || isCompleted) {
-                if (btnText) btnText.textContent = 'Почати перерву';
+                if (btnText) btnText.textContent = t('startBreak');
                 if (btnIcon) btnIcon.textContent = '▶';
                 this.elements.startBtn.classList.remove('btn--hidden');
             } else if (isRunning) {
                 this.elements.startBtn.classList.add('btn--hidden');
             } else if (isPaused) {
-                if (btnText) btnText.textContent = 'Продовжити';
+                if (btnText) btnText.textContent = t('resume');
                 if (btnIcon) btnIcon.textContent = '▶';
                 this.elements.startBtn.classList.remove('btn--hidden');
             }
@@ -295,10 +296,10 @@ class Controls {
             const btnIcon = this.elements.pauseBtn.querySelector('.btn__icon');
 
             if (isPaused) {
-                if (btnText) btnText.textContent = 'Продовжити';
+                if (btnText) btnText.textContent = t('resume');
                 if (btnIcon) btnIcon.textContent = '▶';
             } else {
-                if (btnText) btnText.textContent = 'Пауза';
+                if (btnText) btnText.textContent = t('pause');
                 if (btnIcon) btnIcon.textContent = '⏸';
             }
         }

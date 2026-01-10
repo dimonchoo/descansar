@@ -5,6 +5,7 @@
 
 import { formatTime, formatTimeHHMM, $, calculateReturnTime } from '../utils/helpers.js';
 import { PROGRESS_RING, PHASE_TYPES } from '../utils/constants.js';
+import { t, isUkrainian } from '../utils/i18n.js';
 
 class Display {
     constructor() {
@@ -147,13 +148,13 @@ class Display {
         if (!this.elements.timerLabel) return;
 
         const labels = {
-            [PHASE_TYPES.WORK]: 'Час працювати',
-            [PHASE_TYPES.SHORT_BREAK]: 'Коротка перерва',
-            [PHASE_TYPES.LONG_BREAK]: 'Довга перерва',
-            [PHASE_TYPES.SIMPLE_BREAK]: 'Перерва',
+            [PHASE_TYPES.WORK]: t('workTime'),
+            [PHASE_TYPES.SHORT_BREAK]: t('shortBreak'),
+            [PHASE_TYPES.LONG_BREAK]: t('longBreak'),
+            [PHASE_TYPES.SIMPLE_BREAK]: t('break'),
         };
 
-        this.elements.timerLabel.textContent = labels[phase] || 'Перерва';
+        this.elements.timerLabel.textContent = labels[phase] || t('break');
     }
 
     /**
@@ -169,7 +170,7 @@ class Display {
         }
 
         if (this.elements.timerLabel) {
-            this.elements.timerLabel.textContent = 'Готовий до старту';
+            this.elements.timerLabel.textContent = t('readyToStart');
         }
 
         if (this.elements.returnTime) {
@@ -195,16 +196,16 @@ class Display {
 
         if (this.elements.timerLabel) {
             const messages = {
-                [PHASE_TYPES.WORK]: 'Час для перерви!',
-                [PHASE_TYPES.SHORT_BREAK]: 'Перерва завершена!',
-                [PHASE_TYPES.LONG_BREAK]: 'Довга перерва завершена!',
-                [PHASE_TYPES.SIMPLE_BREAK]: 'Час повертатися!',
+                [PHASE_TYPES.WORK]: t('timeForBreak'),
+                [PHASE_TYPES.SHORT_BREAK]: t('breakComplete'),
+                [PHASE_TYPES.LONG_BREAK]: t('longBreakComplete'),
+                [PHASE_TYPES.SIMPLE_BREAK]: t('timeToReturn'),
             };
-            this.elements.timerLabel.textContent = messages[phase] || 'Завершено!';
+            this.elements.timerLabel.textContent = messages[phase] || t('completed');
         }
 
         // Оновлюємо title з повідомленням про завершення
-        document.title = '🔔 Час! | Descansar';
+        document.title = `🔔 ${t('timeUp')} | Descansar`;
     }
 
     /**
@@ -221,7 +222,7 @@ class Display {
             const minutes = stats.totalWorkMinutes % 60;
             this.elements.totalWorkTime.textContent = hours > 0
                 ? `${hours}:${String(minutes).padStart(2, '0')}`
-                : `${minutes} хв`;
+                : `${minutes} ${t('min')}`;
         }
     }
 

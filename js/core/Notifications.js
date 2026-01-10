@@ -6,6 +6,7 @@
 import { SOUNDS, PHASE_TYPES } from '../utils/constants.js';
 import { supportsNotifications } from '../utils/helpers.js';
 import Storage from './Storage.js';
+import { t } from '../utils/i18n.js';
 
 class Notifications {
     constructor() {
@@ -293,23 +294,23 @@ class Notifications {
     notifyPhaseComplete(phase) {
         const messages = {
             [PHASE_TYPES.SIMPLE_BREAK]: {
-                title: 'Перерва завершена!',
-                body: 'Час повертатися до роботи',
+                title: t('notifications.simpleBreakTitle'),
+                body: t('notifications.simpleBreakBody'),
                 sound: 'break_end',
             },
             [PHASE_TYPES.SHORT_BREAK]: {
-                title: 'Коротка перерва завершена!',
-                body: 'Час продовжити роботу',
+                title: t('notifications.shortBreakTitle'),
+                body: t('notifications.shortBreakBody'),
                 sound: 'break_end',
             },
             [PHASE_TYPES.LONG_BREAK]: {
-                title: 'Довга перерва завершена!',
-                body: 'Ви чудово відпочили! Час працювати',
+                title: t('notifications.longBreakTitle'),
+                body: t('notifications.longBreakBody'),
                 sound: 'break_end',
             },
             [PHASE_TYPES.WORK]: {
-                title: 'Робочий час завершено!',
-                body: 'Час для заслуженого відпочинку',
+                title: t('notifications.workTitle'),
+                body: t('notifications.workBody'),
                 sound: 'work_end',
             },
         };

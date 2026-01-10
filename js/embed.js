@@ -13,6 +13,48 @@
     // Отримуємо поточний скрипт та його атрибути
     const currentScript = document.currentScript;
 
+    // Detect language from data-lang attribute or document lang
+    function detectLang() {
+        const dataLang = currentScript?.getAttribute('data-lang');
+        if (dataLang) return dataLang;
+
+        const htmlLang = document.documentElement.lang;
+        if (htmlLang && htmlLang.startsWith('uk')) return 'uk';
+
+        return 'en';
+    }
+
+    // Translations
+    const i18n = {
+        en: {
+            ready: 'Ready',
+            break: 'Break',
+            paused: 'Paused',
+            timeToReturn: 'Time to return!',
+            start: 'Start',
+            pause: 'Pause',
+            resume: 'Resume',
+            reset: 'Reset',
+            now: 'Now',
+            returnAt: 'Return at',
+        },
+        uk: {
+            ready: 'Готовий',
+            break: 'Перерва',
+            paused: 'Пауза',
+            timeToReturn: 'Час повертатися!',
+            start: 'Старт',
+            pause: 'Пауза',
+            resume: 'Продовжити',
+            reset: 'Скинути',
+            now: 'Зараз',
+            returnAt: 'Повернутись о',
+        },
+    };
+
+    const lang = detectLang();
+    const t = (key) => i18n[lang]?.[key] || i18n.en[key] || key;
+
     const options = {
         container: currentScript?.getAttribute('data-container') || '#descansar-timer',
         duration: parseInt(currentScript?.getAttribute('data-duration')) || 15,
@@ -20,6 +62,7 @@
         compact: currentScript?.getAttribute('data-compact') === 'true',
         branding: currentScript?.getAttribute('data-branding') !== 'false',
         autostart: currentScript?.getAttribute('data-autostart') === 'true',
+        lang: lang,
     };
 
     // Стилі віджета
@@ -276,7 +319,8 @@
     }
 
     function formatTimeHHMM(date) {
-        return date.toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
+        const locale = lang === 'uk' ? 'uk-UA' : 'en-US';
+        return date.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
     }
 
     // Клас віджета
@@ -340,17 +384,17 @@
                             </svg>
                             <div class="descansar-widget__display">
                                 <span class="descansar-widget__time">00:00</span>
-                                <span class="descansar-widget__label">Готовий</span>
+                                <span class="descansar-widget__label">${t('ready')}</span>
                             </div>
                         </div>
 
                         <div class="descansar-widget__info">
                             <div class="descansar-widget__info-item">
-                                <span class="descansar-widget__info-label">Зараз</span>
+                                <span class="descansar-widget__info-label">${t('now')}</span>
                                 <span class="descansar-widget__info-value descansar-widget__current-time">--:--</span>
                             </div>
                             <div class="descansar-widget__info-item">
-                                <span class="descansar-widget__info-label">Повернутись о</span>
+                                <span class="descansar-widget__info-label">${t('returnAt')}</span>
                                 <span class="descansar-widget__info-value descansar-widget__return-time">--:--</span>
                             </div>
                         </div>
@@ -359,16 +403,16 @@
                     <div class="descansar-widget__controls">
                         <button type="button" class="descansar-widget__btn descansar-widget__btn--primary descansar-widget__start-btn">
                             <span>▶</span>
-                            <span>Старт</span>
+                            <span>${t('start')}</span>
                         </button>
                         <div class="descansar-widget__secondary descansar-widget__secondary--hidden">
                             <button type="button" class="descansar-widget__btn descansar-widget__pause-btn">
                                 <span>⏸</span>
-                                <span>Пауза</span>
+                                <span>${t('pause')}</span>
                             </button>
                             <button type="button" class="descansar-widget__btn descansar-widget__reset-btn">
                                 <span>↺</span>
-                                <span>Скинути</span>
+                                <span>${t('reset')}</span>
                             </button>
                         </div>
                     </div>
@@ -478,7 +522,7 @@
             this.updateControls();
 
             if (this.elements.label) {
-                this.elements.label.textContent = 'Час повертатися!';
+                this.elements.label.textContent = t('timeToReturn');
             }
 
             this.dispatchEvent('complete', { duration: this.duration });
@@ -526,21 +570,21 @@
                 const spans = this.elements.pauseBtn.querySelectorAll('span');
                 if (isPaused) {
                     spans[0].textContent = '▶';
-                    spans[1].textContent = 'Продовжити';
+                    spans[1].textContent = t('resume');
                 } else {
                     spans[0].textContent = '⏸';
-                    spans[1].textContent = 'Пауза';
+                    spans[1].textContent = t('pause');
                 }
             }
 
             // Timer label
             if (this.elements.label && this.state !== STATES.COMPLETED) {
                 const labels = {
-                    [STATES.IDLE]: 'Готовий',
-                    [STATES.RUNNING]: 'Перерва',
-                    [STATES.PAUSED]: 'Пауза',
+                    [STATES.IDLE]: t('ready'),
+                    [STATES.RUNNING]: t('break'),
+                    [STATES.PAUSED]: t('paused'),
                 };
-                this.elements.label.textContent = labels[this.state] || 'Готовий';
+                this.elements.label.textContent = labels[this.state] || t('ready');
             }
         }
 
