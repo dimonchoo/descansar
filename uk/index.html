@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Primary Meta Tags -->
-    <title>Descansar — Smart Break Timer for Productive Work</title>
-    <meta name="title" content="Descansar — Smart Break Timer for Productive Work">
-    <meta name="description" content="Free online break timer with Pomodoro technique. Track work time, plan breaks and boost productivity. Works offline.">
-    <meta name="keywords" content="break timer, pomodoro, productivity, time management, work time, rest, pomodoro timer, focus timer">
+    <title>Descansar — Розумний таймер перерв для продуктивної роботи</title>
+    <meta name="title" content="Descansar — Розумний таймер перерв для продуктивної роботи">
+    <meta name="description" content="Безкоштовний онлайн таймер перерв з технікою Pomodoro. Відстежуйте робочий час, плануйте відпочинок та підвищуйте продуктивність. Працює офлайн.">
+    <meta name="keywords" content="таймер перерв, pomodoro, продуктивність, тайм-менеджмент, робочий час, відпочинок, помодоро таймер">
     <meta name="author" content="Descansar">
     <meta name="robots" content="index, follow">
-    <meta name="language" content="English">
+    <meta name="language" content="Ukrainian">
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://descansar.pages.dev/">
+    <link rel="canonical" href="https://descansar.pages.dev/uk">
 
     <!-- Language alternates -->
     <link rel="alternate" hreflang="en" href="https://descansar.pages.dev/">
@@ -23,19 +23,19 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://descansar.pages.dev/">
-    <meta property="og:title" content="Descansar — Smart Break Timer">
-    <meta property="og:description" content="Free online break timer with Pomodoro technique. Boost productivity and take care of your health.">
+    <meta property="og:url" content="https://descansar.pages.dev/uk">
+    <meta property="og:title" content="Descansar — Розумний таймер перерв">
+    <meta property="og:description" content="Безкоштовний онлайн таймер перерв з технікою Pomodoro. Підвищуйте продуктивність та дбайте про здоров'я.">
     <meta property="og:image" content="https://descansar.pages.dev/assets/icons/og-image.png">
-    <meta property="og:locale" content="en_US">
-    <meta property="og:locale:alternate" content="uk_UA">
+    <meta property="og:locale" content="uk_UA">
+    <meta property="og:locale:alternate" content="en_US">
     <meta property="og:site_name" content="Descansar">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://descansar.pages.dev/">
-    <meta name="twitter:title" content="Descansar — Smart Break Timer">
-    <meta name="twitter:description" content="Free online break timer with Pomodoro technique. Boost productivity and take care of your health.">
+    <meta name="twitter:url" content="https://descansar.pages.dev/uk">
+    <meta name="twitter:title" content="Descansar — Розумний таймер перерв">
+    <meta name="twitter:description" content="Безкоштовний онлайн таймер перерв з технікою Pomodoro. Підвищуйте продуктивність та дбайте про здоров'я.">
     <meta name="twitter:image" content="https://descansar.pages.dev/assets/icons/og-image.png">
 
     <!-- PWA -->
@@ -65,24 +65,24 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Descansar",
-        "description": "Smart break timer for productive work with Pomodoro technique support",
-        "url": "https://descansar.pages.dev",
+        "description": "Розумний таймер перерв для продуктивної роботи з підтримкою техніки Pomodoro",
+        "url": "https://descansar.pages.dev/uk",
         "applicationCategory": "ProductivityApplication",
         "operatingSystem": "Any",
         "offers": {
             "@type": "Offer",
             "price": "0",
-            "priceCurrency": "USD"
+            "priceCurrency": "UAH"
         },
         "featureList": [
-            "Simple timer mode",
-            "Pomodoro technique",
-            "Custom work cycles",
-            "Push notifications",
-            "Offline mode",
-            "Dark theme"
+            "Простий режим таймера",
+            "Техніка Pomodoro",
+            "Кастомні цикли роботи",
+            "Push-сповіщення",
+            "Офлайн режим",
+            "Темна тема"
         ],
-        "inLanguage": ["en", "uk"],
+        "inLanguage": "uk",
         "author": {
             "@type": "Organization",
             "name": "Descansar"
@@ -125,24 +125,24 @@
 </head>
 <body>
     <!-- Skip link for accessibility -->
-    <a href="#main" class="skip-link">Skip to main content</a>
+    <a href="#main" class="skip-link">Перейти до основного вмісту</a>
 
     <div class="app" id="app">
         <!-- Header -->
         <header class="header">
             <div class="header__brand">
                 <h1 class="header__title">Descansar</h1>
-                <p class="header__tagline">Time for a break</p>
+                <p class="header__tagline">Час для перерви</p>
             </div>
             <nav class="header__nav">
-                <div class="lang-switcher" aria-label="Language switcher">
-                    <a href="/" class="lang-switcher__btn lang-switcher__btn--active" aria-current="page">EN</a>
-                    <a href="/uk" class="lang-switcher__btn">UK</a>
+                <div class="lang-switcher" aria-label="Перемикач мови">
+                    <a href="/" class="lang-switcher__btn">EN</a>
+                    <a href="/uk" class="lang-switcher__btn lang-switcher__btn--active" aria-current="page">UK</a>
                 </div>
-                <button type="button" class="btn btn--icon" id="themeToggle" aria-label="Toggle theme">
+                <button type="button" class="btn btn--icon" id="themeToggle" aria-label="Перемкнути тему">
                     <span class="icon icon--theme"></span>
                 </button>
-                <button type="button" class="btn btn--icon" id="settingsToggle" aria-label="Settings">
+                <button type="button" class="btn btn--icon" id="settingsToggle" aria-label="Налаштування">
                     <span class="icon icon--settings"></span>
                 </button>
             </nav>
@@ -151,7 +151,7 @@
         <!-- Main content -->
         <main id="main" class="main">
             <!-- Mode selector -->
-            <section class="mode-selector" aria-label="Mode selection">
+            <section class="mode-selector" aria-label="Вибір режиму">
                 <div class="mode-selector__tabs" role="tablist">
                     <button
                         type="button"
@@ -162,7 +162,7 @@
                         aria-controls="panel-simple"
                         data-mode="simple"
                     >
-                        Simple
+                        Простий
                     </button>
                     <button
                         type="button"
@@ -173,13 +173,13 @@
                         aria-controls="panel-advanced"
                         data-mode="advanced"
                     >
-                        Advanced
+                        Розширений
                     </button>
                 </div>
             </section>
 
             <!-- Timer display -->
-            <section class="timer" aria-label="Timer">
+            <section class="timer" aria-label="Таймер">
                 <!-- Celebration animation (hidden by default) -->
                 <div class="timer__celebration" id="celebrationLottie" style="display: none;"></div>
 
@@ -191,18 +191,18 @@
                     </svg>
                     <div class="timer__display">
                         <span class="timer__time" id="timerDisplay">00:00</span>
-                        <span class="timer__label" id="timerLabel">Ready to start</span>
+                        <span class="timer__label" id="timerLabel">Готовий до старту</span>
                     </div>
                 </div>
 
                 <!-- Timer info -->
                 <div class="timer__info">
                     <div class="timer__info-item">
-                        <span class="timer__info-label">Now</span>
+                        <span class="timer__info-label">Зараз</span>
                         <time class="timer__info-value" id="currentTime">--:--</time>
                     </div>
                     <div class="timer__info-item">
-                        <span class="timer__info-label">Return at</span>
+                        <span class="timer__info-label">Повернутись о</span>
                         <time class="timer__info-value" id="returnTime">--:--</time>
                     </div>
                 </div>
@@ -217,10 +217,10 @@
             >
                 <div class="input-group">
                     <label for="breakDuration" class="input-group__label">
-                        Break duration
+                        Тривалість перерви
                     </label>
                     <div class="input-group__control">
-                        <button type="button" class="btn btn--adjust" data-adjust="-5" aria-label="Decrease by 5 minutes">−5</button>
+                        <button type="button" class="btn btn--adjust" data-adjust="-5" aria-label="Зменшити на 5 хвилин">−5</button>
                         <input
                             type="number"
                             id="breakDuration"
@@ -230,18 +230,18 @@
                             max="480"
                             aria-describedby="breakDurationHint"
                         >
-                        <span class="input-group__suffix">min</span>
-                        <button type="button" class="btn btn--adjust" data-adjust="5" aria-label="Increase by 5 minutes">+5</button>
+                        <span class="input-group__suffix">хв</span>
+                        <button type="button" class="btn btn--adjust" data-adjust="5" aria-label="Збільшити на 5 хвилин">+5</button>
                     </div>
-                    <span id="breakDurationHint" class="input-group__hint">From 1 to 480 minutes</span>
+                    <span id="breakDurationHint" class="input-group__hint">Від 1 до 480 хвилин</span>
                 </div>
 
                 <!-- Quick presets -->
                 <div class="presets">
-                    <button type="button" class="btn btn--preset" data-preset="5">5 min</button>
-                    <button type="button" class="btn btn--preset" data-preset="15">15 min</button>
-                    <button type="button" class="btn btn--preset" data-preset="30">30 min</button>
-                    <button type="button" class="btn btn--preset" data-preset="60">1 hour</button>
+                    <button type="button" class="btn btn--preset" data-preset="5">5 хв</button>
+                    <button type="button" class="btn btn--preset" data-preset="15">15 хв</button>
+                    <button type="button" class="btn btn--preset" data-preset="30">30 хв</button>
+                    <button type="button" class="btn btn--preset" data-preset="60">1 год</button>
                 </div>
             </section>
 
@@ -256,58 +256,58 @@
                 <div class="techniques">
                     <article class="technique-card" data-technique="pomodoro">
                         <h3 class="technique-card__title">Pomodoro</h3>
-                        <p class="technique-card__description">25 min work → 5 min break</p>
-                        <div class="technique-card__meta">4 cycles, then 15 min long break</div>
+                        <p class="technique-card__description">25 хв роботи → 5 хв перерви</p>
+                        <div class="technique-card__meta">4 цикли, потім довга перерва 15 хв</div>
                     </article>
 
                     <article class="technique-card" data-technique="52-17">
                         <h3 class="technique-card__title">52/17</h3>
-                        <p class="technique-card__description">52 min work → 17 min break</p>
-                        <div class="technique-card__meta">Most effective according to research</div>
+                        <p class="technique-card__description">52 хв роботи → 17 хв перерви</p>
+                        <div class="technique-card__meta">Найефективніший за дослідженнями</div>
                     </article>
 
                     <article class="technique-card" data-technique="custom">
-                        <h3 class="technique-card__title">Custom</h3>
-                        <p class="technique-card__description">Set your own rhythm</p>
-                        <div class="technique-card__meta">Flexible cycle settings</div>
+                        <h3 class="technique-card__title">Власний</h3>
+                        <p class="technique-card__description">Налаштуйте свій ритм</p>
+                        <div class="technique-card__meta">Гнучкі налаштування циклів</div>
                     </article>
                 </div>
 
                 <!-- Custom technique settings (hidden by default) -->
                 <div class="custom-settings custom-settings--hidden" id="customSettings">
                     <div class="input-group">
-                        <label for="workDuration" class="input-group__label">Work time (min)</label>
+                        <label for="workDuration" class="input-group__label">Час роботи (хв)</label>
                         <input type="number" id="workDuration" class="input" value="25" min="1" max="120">
                     </div>
                     <div class="input-group">
-                        <label for="shortBreak" class="input-group__label">Short break (min)</label>
+                        <label for="shortBreak" class="input-group__label">Коротка перерва (хв)</label>
                         <input type="number" id="shortBreak" class="input" value="5" min="1" max="30">
                     </div>
                     <div class="input-group">
-                        <label for="longBreak" class="input-group__label">Long break (min)</label>
+                        <label for="longBreak" class="input-group__label">Довга перерва (хв)</label>
                         <input type="number" id="longBreak" class="input" value="15" min="5" max="60">
                     </div>
                     <div class="input-group">
-                        <label for="cyclesBeforeLong" class="input-group__label">Cycles before long break</label>
+                        <label for="cyclesBeforeLong" class="input-group__label">Циклів до довгої перерви</label>
                         <input type="number" id="cyclesBeforeLong" class="input" value="4" min="2" max="10">
                     </div>
                 </div>
             </section>
 
             <!-- Controls -->
-            <section class="controls" aria-label="Timer controls">
+            <section class="controls" aria-label="Керування таймером">
                 <button type="button" class="btn btn--primary btn--large" id="startBtn">
                     <span class="btn__icon">▶</span>
-                    <span class="btn__text">Start break</span>
+                    <span class="btn__text">Почати перерву</span>
                 </button>
                 <div class="controls__secondary controls__secondary--hidden" id="secondaryControls">
                     <button type="button" class="btn btn--secondary" id="pauseBtn">
                         <span class="btn__icon">⏸</span>
-                        <span class="btn__text">Pause</span>
+                        <span class="btn__text">Пауза</span>
                     </button>
                     <button type="button" class="btn btn--secondary" id="resetBtn">
                         <span class="btn__icon">↺</span>
-                        <span class="btn__text">Reset</span>
+                        <span class="btn__text">Скинути</span>
                     </button>
                 </div>
             </section>
@@ -316,9 +316,9 @@
         <!-- Footer -->
         <footer class="footer">
             <p class="footer__text">
-                Made with <span aria-label="love">❤️</span> for productivity
+                Зроблено з <span aria-label="любов'ю">❤️</span> для продуктивності
             </p>
-            <a href="/embed-guide.html" class="footer__link">Embed widget on your site</a>
+            <a href="/embed-guide-uk.html" class="footer__link">Вбудувати віджет на свій сайт</a>
             <p class="footer__copyright">© 2025 Descansar</p>
         </footer>
 
@@ -326,39 +326,39 @@
         <dialog class="modal" id="settingsModal" aria-labelledby="settingsTitle">
             <div class="modal__content">
                 <header class="modal__header">
-                    <h2 id="settingsTitle" class="modal__title">Settings</h2>
-                    <button type="button" class="btn btn--icon modal__close" id="closeSettings" aria-label="Close">
+                    <h2 id="settingsTitle" class="modal__title">Налаштування</h2>
+                    <button type="button" class="btn btn--icon modal__close" id="closeSettings" aria-label="Закрити">
                         <span class="icon icon--close"></span>
                     </button>
                 </header>
                 <div class="modal__body">
                     <fieldset class="settings-group">
-                        <legend class="settings-group__title">Notifications</legend>
+                        <legend class="settings-group__title">Сповіщення</legend>
                         <label class="toggle">
                             <input type="checkbox" id="enableNotifications" checked>
                             <span class="toggle__slider"></span>
-                            <span class="toggle__label">Push notifications</span>
+                            <span class="toggle__label">Push-сповіщення</span>
                         </label>
                         <label class="toggle">
                             <input type="checkbox" id="enableSound" checked>
                             <span class="toggle__slider"></span>
-                            <span class="toggle__label">Sound notifications</span>
+                            <span class="toggle__label">Звукові сповіщення</span>
                         </label>
                     </fieldset>
 
                     <fieldset class="settings-group">
-                        <legend class="settings-group__title">Appearance</legend>
+                        <legend class="settings-group__title">Зовнішній вигляд</legend>
                         <label class="toggle">
                             <input type="checkbox" id="autoTheme">
                             <span class="toggle__slider"></span>
-                            <span class="toggle__label">Auto theme</span>
+                            <span class="toggle__label">Автоматична тема</span>
                         </label>
                     </fieldset>
 
                     <fieldset class="settings-group">
-                        <legend class="settings-group__title">Data</legend>
+                        <legend class="settings-group__title">Дані</legend>
                         <button type="button" class="btn btn--secondary" id="clearData">
-                            Clear all data
+                            Очистити всі дані
                         </button>
                     </fieldset>
                 </div>
