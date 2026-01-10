@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Embed Break Timer Widget | Descansar</title>
-    <meta name="description" content="Add a customizable break timer widget to your website. Easy integration with JavaScript or iframe. Configure duration, theme, and more.">
-    <meta name="keywords" content="break timer, pomodoro widget, embed timer, website widget, productivity tool, rest timer">
+    <title>Вбудувати віджет таймера перерв | Descansar</title>
+    <meta name="description" content="Додайте налаштовуваний віджет таймера перерв на свій сайт. Легка інтеграція через JavaScript або iframe. Налаштування тривалості, теми та інше.">
+    <meta name="keywords" content="таймер перерв, помодоро віджет, вбудувати таймер, віджет для сайту, інструмент продуктивності, таймер відпочинку">
     <meta name="author" content="Descansar">
     <meta name="robots" content="index, follow">
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://descansar.pages.dev/embed-guide.html">
+    <link rel="canonical" href="https://descansar.pages.dev/embed-guide-uk.html">
 
     <!-- Language alternates -->
     <link rel="alternate" hreflang="en" href="https://descansar.pages.dev/embed-guide.html">
@@ -18,18 +18,18 @@
     <link rel="alternate" hreflang="x-default" href="https://descansar.pages.dev/embed-guide.html">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Embed Break Timer Widget | Descansar">
-    <meta property="og:description" content="Add a customizable break timer widget to your website. Easy integration with JavaScript or iframe.">
+    <meta property="og:title" content="Вбудувати віджет таймера перерв | Descansar">
+    <meta property="og:description" content="Додайте налаштовуваний віджет таймера перерв на свій сайт. Легка інтеграція через JavaScript або iframe.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://descansar.pages.dev/embed-guide.html">
+    <meta property="og:url" content="https://descansar.pages.dev/embed-guide-uk.html">
     <meta property="og:site_name" content="Descansar">
-    <meta property="og:locale" content="en_US">
-    <meta property="og:locale:alternate" content="uk_UA">
+    <meta property="og:locale" content="uk_UA">
+    <meta property="og:locale:alternate" content="en_US">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Embed Break Timer Widget | Descansar">
-    <meta name="twitter:description" content="Add a customizable break timer widget to your website.">
+    <meta name="twitter:title" content="Вбудувати віджет таймера перерв | Descansar">
+    <meta name="twitter:description" content="Додайте налаштовуваний віджет таймера перерв на свій сайт.">
 
     <link rel="stylesheet" href="/css/main.css">
     <style>
@@ -308,28 +308,28 @@
 <body>
     <div class="guide">
         <div class="top-bar">
-            <a href="/" class="back-link">← Back to Descansar</a>
-            <nav class="lang-switcher" aria-label="Language switcher">
-                <a href="/embed-guide.html" class="lang-switcher__btn lang-switcher__btn--active" aria-current="page">EN</a>
-                <a href="/embed-guide-uk.html" class="lang-switcher__btn">UK</a>
+            <a href="/" class="back-link">← Назад до Descansar</a>
+            <nav class="lang-switcher" aria-label="Перемикач мови">
+                <a href="/embed-guide.html" class="lang-switcher__btn">EN</a>
+                <a href="/embed-guide-uk.html" class="lang-switcher__btn lang-switcher__btn--active" aria-current="page">UK</a>
             </nav>
         </div>
 
         <header class="guide__header">
-            <h1 class="guide__title">Embed Timer Widget</h1>
-            <p class="guide__subtitle">Add a break timer to your website in minutes</p>
+            <h1 class="guide__title">Вбудувати таймер</h1>
+            <p class="guide__subtitle">Додайте таймер перерв на свій сайт за кілька хвилин</p>
         </header>
 
         <!-- Generator -->
         <section class="guide__section">
-            <h2 class="guide__section-title">Code Generator</h2>
-            <p class="guide__text">Configure the settings and copy the ready-to-use code.</p>
+            <h2 class="guide__section-title">Генератор коду</h2>
+            <p class="guide__text">Налаштуйте параметри та скопіюйте готовий код для вставки.</p>
 
             <div class="generator">
                 <!-- Method selector -->
                 <div class="generator__method-selector">
                     <button type="button" class="generator__method-btn generator__method-btn--active" data-method="script">
-                        JavaScript (recommended)
+                        JavaScript (рекомендовано)
                     </button>
                     <button type="button" class="generator__method-btn" data-method="iframe">
                         iframe
@@ -338,22 +338,22 @@
 
                 <div class="generator__row">
                     <div class="generator__field">
-                        <label class="generator__label" for="genDuration">Duration (min)</label>
+                        <label class="generator__label" for="genDuration">Тривалість (хв)</label>
                         <input type="number" id="genDuration" class="generator__input" value="15" min="1" max="480">
                     </div>
                     <div class="generator__field">
-                        <label class="generator__label" for="genTheme">Theme</label>
+                        <label class="generator__label" for="genTheme">Тема</label>
                         <select id="genTheme" class="generator__select">
-                            <option value="light">Light</option>
-                            <option value="dark">Dark</option>
+                            <option value="light">Світла</option>
+                            <option value="dark">Темна</option>
                         </select>
                     </div>
                     <div class="generator__field generator__field--iframe-only">
-                        <label class="generator__label" for="genWidth">Width</label>
-                        <input type="text" id="genWidth" class="generator__input" value="100%" placeholder="400px or 100%">
+                        <label class="generator__label" for="genWidth">Ширина</label>
+                        <input type="text" id="genWidth" class="generator__input" value="100%" placeholder="400px або 100%">
                     </div>
                     <div class="generator__field generator__field--iframe-only">
-                        <label class="generator__label" for="genHeight">Height</label>
+                        <label class="generator__label" for="genHeight">Висота</label>
                         <input type="text" id="genHeight" class="generator__input" value="450px" placeholder="450px">
                     </div>
                 </div>
@@ -361,32 +361,32 @@
                 <div class="generator__row">
                     <label class="generator__checkbox">
                         <input type="checkbox" id="genCompact">
-                        <span>Compact mode</span>
+                        <span>Компактний режим</span>
                     </label>
                     <label class="generator__checkbox generator__field--iframe-only">
                         <input type="checkbox" id="genTransparent">
-                        <span>Transparent background</span>
+                        <span>Прозорий фон</span>
                     </label>
                     <label class="generator__checkbox">
                         <input type="checkbox" id="genBranding" checked>
-                        <span>Show branding</span>
+                        <span>Показувати брендинг</span>
                     </label>
                     <label class="generator__checkbox">
                         <input type="checkbox" id="genAutostart">
-                        <span>Autostart</span>
+                        <span>Автостарт</span>
                     </label>
                 </div>
 
                 <div class="generator__result">
                     <div class="code-block">
-                        <button class="code-block__copy" onclick="copyCode()">Copy</button>
+                        <button class="code-block__copy" onclick="copyCode()">Копіювати</button>
                         <code id="generatedCode"></code>
                     </div>
                 </div>
 
-                <h3 style="margin-top: var(--space-6); margin-bottom: var(--space-3);">Preview</h3>
+                <h3 style="margin-top: var(--space-6); margin-bottom: var(--space-3);">Попередній перегляд</h3>
                 <div class="preview">
-                    <div class="preview__label">Live Preview</div>
+                    <div class="preview__label">Попередній перегляд</div>
                     <div id="scriptPreview" style="display: none; padding: var(--space-4);"></div>
                     <iframe id="previewFrame" height="400"></iframe>
                 </div>
@@ -395,22 +395,22 @@
 
         <!-- Basic usage -->
         <section class="guide__section">
-            <h2 class="guide__section-title">Basic Usage</h2>
+            <h2 class="guide__section-title">Базове використання</h2>
 
-            <h3 style="margin-bottom: var(--space-3);">Method 1: JavaScript (recommended)</h3>
-            <p class="guide__text">The best way is to use the JavaScript script. The widget integrates directly into your page:</p>
+            <h3 style="margin-bottom: var(--space-3);">Спосіб 1: JavaScript (рекомендовано)</h3>
+            <p class="guide__text">Найкращий спосіб - використати JavaScript скрипт. Віджет інтегрується безпосередньо на вашу сторінку:</p>
 
             <div class="code-block">
-                <button class="code-block__copy" onclick="copyToClipboard(this)">Copy</button>
+                <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
                 <code>&lt;div id="descansar-timer"&gt;&lt;/div&gt;
 &lt;script src="https://descansar.pages.dev/js/embed.js"&gt;&lt;/script&gt;</code>
             </div>
 
-            <h3 style="margin-bottom: var(--space-3); margin-top: var(--space-6);">Method 2: iframe</h3>
-            <p class="guide__text">Alternative method - use an iframe:</p>
+            <h3 style="margin-bottom: var(--space-3); margin-top: var(--space-6);">Спосіб 2: iframe</h3>
+            <p class="guide__text">Альтернативний спосіб - використати iframe:</p>
 
             <div class="code-block">
-                <button class="code-block__copy" onclick="copyToClipboard(this)">Copy</button>
+                <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
                 <code>&lt;iframe
   src="https://descansar.pages.dev/embed.html"
   width="100%"
@@ -423,62 +423,62 @@
 
         <!-- Script Parameters -->
         <section class="guide__section">
-            <h2 class="guide__section-title">JavaScript Parameters</h2>
-            <p class="guide__text">Configure the timer using data attributes:</p>
+            <h2 class="guide__section-title">Параметри JavaScript</h2>
+            <p class="guide__text">Налаштуйте таймер за допомогою data-атрибутів:</p>
 
             <table class="params-table">
                 <thead>
                     <tr>
-                        <th>Attribute</th>
-                        <th>Description</th>
-                        <th>Values</th>
-                        <th>Default</th>
+                        <th>Атрибут</th>
+                        <th>Опис</th>
+                        <th>Значення</th>
+                        <th>За замовчуванням</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td><code>data-container</code></td>
-                        <td>CSS selector for container</td>
-                        <td>Any selector</td>
+                        <td>CSS селектор контейнера</td>
+                        <td>Будь-який селектор</td>
                         <td>#descansar-timer</td>
                     </tr>
                     <tr>
                         <td><code>data-duration</code></td>
-                        <td>Break duration in minutes</td>
+                        <td>Тривалість перерви в хвилинах</td>
                         <td>1-480</td>
                         <td>15</td>
                     </tr>
                     <tr>
                         <td><code>data-theme</code></td>
-                        <td>Color theme</td>
+                        <td>Кольорова тема</td>
                         <td>light, dark</td>
                         <td>light</td>
                     </tr>
                     <tr>
                         <td><code>data-compact</code></td>
-                        <td>Compact mode</td>
+                        <td>Компактний режим</td>
                         <td>true, false</td>
                         <td>false</td>
                     </tr>
                     <tr>
                         <td><code>data-branding</code></td>
-                        <td>Show branding</td>
+                        <td>Показувати брендинг</td>
                         <td>true, false</td>
                         <td>true</td>
                     </tr>
                     <tr>
                         <td><code>data-autostart</code></td>
-                        <td>Auto start timer</td>
+                        <td>Автоматичний старт</td>
                         <td>true, false</td>
                         <td>false</td>
                     </tr>
                 </tbody>
             </table>
 
-            <p class="guide__text">Example with parameters:</p>
+            <p class="guide__text">Приклад з параметрами:</p>
 
             <div class="code-block">
-                <button class="code-block__copy" onclick="copyToClipboard(this)">Copy</button>
+                <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
                 <code>&lt;div id="descansar-timer"&gt;&lt;/div&gt;
 &lt;script
   src="https://descansar.pages.dev/js/embed.js"
@@ -491,62 +491,62 @@
 
         <!-- URL Parameters -->
         <section class="guide__section">
-            <h2 class="guide__section-title">URL Parameters (for iframe)</h2>
-            <p class="guide__text">Configure the timer using URL parameters:</p>
+            <h2 class="guide__section-title">Параметри URL (для iframe)</h2>
+            <p class="guide__text">Налаштуйте таймер за допомогою параметрів URL:</p>
 
             <table class="params-table">
                 <thead>
                     <tr>
-                        <th>Parameter</th>
-                        <th>Description</th>
-                        <th>Values</th>
-                        <th>Default</th>
+                        <th>Параметр</th>
+                        <th>Опис</th>
+                        <th>Значення</th>
+                        <th>За замовчуванням</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td><code>duration</code></td>
-                        <td>Break duration in minutes</td>
+                        <td>Тривалість перерви в хвилинах</td>
                         <td>1-480</td>
                         <td>15</td>
                     </tr>
                     <tr>
                         <td><code>theme</code></td>
-                        <td>Color theme</td>
+                        <td>Кольорова тема</td>
                         <td>light, dark</td>
                         <td>light</td>
                     </tr>
                     <tr>
                         <td><code>compact</code></td>
-                        <td>Compact mode without extra elements</td>
+                        <td>Компактний режим без зайвих елементів</td>
                         <td>true, false</td>
                         <td>false</td>
                     </tr>
                     <tr>
                         <td><code>transparent</code></td>
-                        <td>Transparent background</td>
+                        <td>Прозорий фон</td>
                         <td>true, false</td>
                         <td>false</td>
                     </tr>
                     <tr>
                         <td><code>branding</code></td>
-                        <td>Show Descansar branding</td>
+                        <td>Показувати лого Descansar</td>
                         <td>true, false</td>
                         <td>true</td>
                     </tr>
                     <tr>
                         <td><code>autostart</code></td>
-                        <td>Auto start the timer</td>
+                        <td>Автоматичний старт таймера</td>
                         <td>true, false</td>
                         <td>false</td>
                     </tr>
                 </tbody>
             </table>
 
-            <p class="guide__text">Example with parameters:</p>
+            <p class="guide__text">Приклад з параметрами:</p>
 
             <div class="code-block">
-                <button class="code-block__copy" onclick="copyToClipboard(this)">Copy</button>
+                <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
                 <code>&lt;iframe
   src="https://descansar.pages.dev/embed.html?duration=25&theme=dark&compact=true"
   width="300"
@@ -560,103 +560,103 @@
         <section class="guide__section">
             <h2 class="guide__section-title">JavaScript API</h2>
 
-            <h3 style="margin-bottom: var(--space-3);">For JavaScript Widget</h3>
-            <p class="guide__text">Control the timer directly through the global object:</p>
+            <h3 style="margin-bottom: var(--space-3);">Для JavaScript віджета</h3>
+            <p class="guide__text">Керуйте таймером напряму через глобальний об'єкт:</p>
 
             <div class="code-block">
-                <button class="code-block__copy" onclick="copyToClipboard(this)">Copy</button>
-                <code>// Global widget object
+                <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
+                <code>// Глобальний об'єкт віджета
 const timer = window.descansar;
 
-// Start the timer
+// Запустити таймер
 timer.start();
 
-// Pause
+// Поставити на паузу
 timer.pause();
 
-// Resume
+// Продовжити
 timer.resume();
 
-// Reset
+// Скинути
 timer.reset();
 
-// Change duration (in minutes)
+// Змінити тривалість (в хвилинах)
 timer.setDuration(30);</code>
             </div>
 
-            <p class="guide__text">Listen to timer events:</p>
+            <p class="guide__text">Слухайте події від таймера:</p>
 
             <div class="code-block">
-                <button class="code-block__copy" onclick="copyToClipboard(this)">Copy</button>
+                <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
                 <code>window.addEventListener('descansar', (event) => {
   const { event: eventName, duration } = event.detail;
 
   switch (eventName) {
     case 'ready':
-      console.log('Timer ready, duration:', duration);
+      console.log('Таймер готовий, тривалість:', duration);
       break;
     case 'start':
-      console.log('Timer started');
+      console.log('Таймер запущено');
       break;
     case 'pause':
-      console.log('Timer paused');
+      console.log('Таймер на паузі');
       break;
     case 'resume':
-      console.log('Timer resumed');
+      console.log('Таймер продовжено');
       break;
     case 'complete':
-      console.log('Break complete!');
-      // Show notification, play sound, etc.
+      console.log('Перерва завершена!');
+      // Показати сповіщення, відтворити звук і т.д.
       break;
     case 'reset':
-      console.log('Timer reset');
+      console.log('Таймер скинуто');
       break;
   }
 });</code>
             </div>
 
-            <h3 style="margin-bottom: var(--space-3); margin-top: var(--space-6);">For iframe</h3>
-            <p class="guide__text">Control the timer via postMessage:</p>
+            <h3 style="margin-bottom: var(--space-3); margin-top: var(--space-6);">Для iframe</h3>
+            <p class="guide__text">Керуйте таймером через postMessage:</p>
 
             <div class="code-block">
-                <button class="code-block__copy" onclick="copyToClipboard(this)">Copy</button>
-                <code>// Get iframe reference
+                <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
+                <code>// Отримати iframe
 const iframe = document.querySelector('iframe');
 
-// Start the timer
+// Запустити таймер
 iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'start' }, '*');
 
-// Pause
+// Поставити на паузу
 iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'pause' }, '*');
 
-// Resume
+// Продовжити
 iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'resume' }, '*');
 
-// Reset
+// Скинути
 iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'reset' }, '*');
 
-// Change duration (in minutes)
+// Змінити тривалість (в хвилинах)
 iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'setDuration', duration: 30 }, '*');</code>
             </div>
 
-            <p class="guide__text">Listen to iframe events:</p>
+            <p class="guide__text">Слухайте події від iframe:</p>
 
             <div class="code-block">
-                <button class="code-block__copy" onclick="copyToClipboard(this)">Copy</button>
+                <button class="code-block__copy" onclick="copyToClipboard(this)">Копіювати</button>
                 <code>window.addEventListener('message', (event) => {
   if (event.data?.source !== 'descansar-embed') return;
 
   switch (event.data.event) {
     case 'ready':
-      console.log('Timer ready, duration:', event.data.duration);
+      console.log('Таймер готовий, тривалість:', event.data.duration);
       break;
     case 'start':
-      console.log('Timer started');
+      console.log('Таймер запущено');
       break;
     case 'complete':
-      console.log('Break complete!');
+      console.log('Перерва завершена!');
       break;
-    // ... other events
+    // ... інші події
   }
 });</code>
             </div>
@@ -664,15 +664,15 @@ iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'setDurati
 
         <!-- Examples -->
         <section class="guide__section">
-            <h2 class="guide__section-title">Examples</h2>
+            <h2 class="guide__section-title">Приклади</h2>
 
-            <h3 style="margin-bottom: var(--space-3);">Compact Dark Timer</h3>
+            <h3 style="margin-bottom: var(--space-3);">Компактний темний таймер</h3>
             <div class="preview">
                 <div class="preview__label">duration=10&theme=dark&compact=true</div>
                 <iframe src="/embed.html?duration=10&theme=dark&compact=true" height="300"></iframe>
             </div>
 
-            <h3 style="margin-bottom: var(--space-3); margin-top: var(--space-6);">Standard Light Timer</h3>
+            <h3 style="margin-bottom: var(--space-3); margin-top: var(--space-6);">Стандартний світлий таймер</h3>
             <div class="preview">
                 <div class="preview__label">duration=15&theme=light</div>
                 <iframe src="/embed.html?duration=15&theme=light" height="400"></iframe>
@@ -682,8 +682,8 @@ iframe.contentWindow.postMessage({ target: 'descansar-embed', action: 'setDurati
 
     <script>
         let currentMethod = 'script';
-        const copyText = 'Copy';
-        const copiedText = 'Copied!';
+        const copyText = 'Копіювати';
+        const copiedText = 'Скопійовано!';
 
         // Method selector
         document.querySelectorAll('.generator__method-btn').forEach(btn => {
