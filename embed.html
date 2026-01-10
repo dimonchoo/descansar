@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descansar Timer</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <style>
+        /* Embed-specific styles */
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        .embed {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: var(--space-4);
+            box-sizing: border-box;
+        }
+
+        .embed--transparent {
+            background: transparent;
+        }
+
+        .embed .timer {
+            gap: var(--space-4);
+        }
+
+        .embed .timer__progress {
+            width: 160px;
+            height: 160px;
+        }
+
+        .embed .timer__time {
+            font-size: var(--font-size-4xl);
+        }
+
+        .embed .timer__info {
+            gap: var(--space-6);
+        }
+
+        .embed .controls {
+            margin-top: var(--space-4);
+        }
+
+        .embed .btn--large {
+            padding: var(--space-3) var(--space-6);
+            font-size: var(--font-size-sm);
+        }
+
+        /* Compact mode */
+        .embed--compact .timer__info {
+            display: none;
+        }
+
+        .embed--compact .timer__label {
+            display: none;
+        }
+
+        .embed--compact .timer__progress {
+            width: 120px;
+            height: 120px;
+        }
+
+        .embed--compact .timer__time {
+            font-size: var(--font-size-3xl);
+        }
+
+        /* Branding */
+        .embed__branding {
+            position: fixed;
+            bottom: var(--space-2);
+            right: var(--space-2);
+            font-size: var(--font-size-xs);
+            color: var(--color-text-muted);
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity var(--transition-fast);
+        }
+
+        .embed__branding:hover {
+            opacity: 1;
+            color: var(--color-primary);
+        }
+
+        .embed--no-branding .embed__branding {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="embed" id="embedContainer">
+        <!-- Timer display -->
+        <section class="timer">
+            <div class="timer__celebration" id="celebrationLottie" style="display: none;"></div>
+
+            <div class="timer__progress">
+                <svg class="progress-ring" viewBox="0 0 200 200">
+                    <circle class="progress-ring__background" cx="100" cy="100" r="90"/>
+                    <circle class="progress-ring__progress" cx="100" cy="100" r="90" id="progressCircle"/>
+                </svg>
+                <div class="timer__display">
+                    <span class="timer__time" id="timerDisplay">00:00</span>
+                    <span class="timer__label" id="timerLabel">Готовий</span>
+                </div>
+            </div>
+
+            <div class="timer__info">
+                <div class="timer__info-item">
+                    <span class="timer__info-label">Зараз</span>
+                    <time class="timer__info-value" id="currentTime">--:--</time>
+                </div>
+                <div class="timer__info-item">
+                    <span class="timer__info-label">Повернутись о</span>
+                    <time class="timer__info-value" id="returnTime">--:--</time>
+                </div>
+            </div>
+        </section>
+
+        <!-- Controls -->
+        <section class="controls">
+            <button type="button" class="btn btn--primary btn--large" id="startBtn">
+                <span class="btn__icon">▶</span>
+                <span class="btn__text">Старт</span>
+            </button>
+            <div class="controls__secondary controls__secondary--hidden" id="secondaryControls">
+                <button type="button" class="btn btn--secondary" id="pauseBtn">
+                    <span class="btn__icon">⏸</span>
+                    <span class="btn__text">Пауза</span>
+                </button>
+                <button type="button" class="btn btn--secondary" id="resetBtn">
+                    <span class="btn__icon">↺</span>
+                    <span class="btn__text">Скинути</span>
+                </button>
+            </div>
+        </section>
+
+        <a href="https://descansar.pages.dev" target="_blank" rel="noopener" class="embed__branding">
+            Descansar
+        </a>
+    </div>
+
+    <script type="module">
+        import { formatTime, formatTimeHHMM, calculateReturnTime, $ } from '/js/utils/helpers.js';
+        import { PROGRESS_RING, TIMER_STATES, PHASE_TYPES } from '/js/utils/constants.js';
+
+        class EmbedTimer {
+            constructor(options = {}) {
+                this.duration = options.duration || 15; // minutes
+                this.theme = options.theme || 'light';
+                this.compact = options.compact || false;
+                this.transparent = options.transparent || false;
+                this.branding = options.branding !== false;
+                this.autostart = options.autostart || false;
+
+                this.state = TIMER_STATES.IDLE;
+                this.remainingSeconds = this.duration * 60;
+                this.totalSeconds = this.duration * 60;
+                this.interval = null;
+
+                this.elements = {
+                    container: $('embedContainer'),
+                    timerDisplay: $('timerDisplay'),
+                    timerLabel: $('timerLabel'),
+                    currentTime: $('currentTime'),
+                    returnTime: $('returnTime'),
+                    progressCircle: $('progressCircle'),
+                    startBtn: $('startBtn'),
+                    pauseBtn: $('pauseBtn'),
+                    resetBtn: $('resetBtn'),
+                    secondaryControls: $('secondaryControls'),
+                };
+
+                this.init();
+            }
+
+            init() {
+                // Apply options
+                if (this.theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+
+                if (this.compact) {
+                    this.elements.container.classList.add('embed--compact');
+                }
+
+                if (this.transparent) {
+                    this.elements.container.classList.add('embed--transparent');
+                    document.body.style.background = 'transparent';
+                }
+
+                if (!this.branding) {
+                    this.elements.container.classList.add('embed--no-branding');
+                }
+
+                // Setup progress ring
+                if (this.elements.progressCircle) {
+                    this.elements.progressCircle.style.strokeDasharray = PROGRESS_RING.CIRCUMFERENCE;
+                    this.elements.progressCircle.style.strokeDashoffset = 0;
+                }
+
+                // Set initial state
+                this.updateDisplay();
+                this.startClock();
+
+                // Bind events
+                this.bindEvents();
+
+                // Autostart if enabled
+                if (this.autostart) {
+                    this.start();
+                }
+
+                // Notify parent window that embed is ready
+                this.postMessage('ready', { duration: this.duration });
+            }
+
+            bindEvents() {
+                this.elements.startBtn?.addEventListener('click', () => this.start());
+                this.elements.pauseBtn?.addEventListener('click', () => this.togglePause());
+                this.elements.resetBtn?.addEventListener('click', () => this.reset());
+            }
+
+            start() {
+                if (this.state === TIMER_STATES.RUNNING) return;
+
+                this.state = TIMER_STATES.RUNNING;
+                this.updateControls();
+
+                this.interval = setInterval(() => this.tick(), 1000);
+                this.postMessage('start', { duration: this.duration });
+            }
+
+            tick() {
+                if (this.remainingSeconds <= 0) {
+                    this.complete();
+                    return;
+                }
+
+                this.remainingSeconds--;
+                this.updateDisplay();
+            }
+
+            togglePause() {
+                if (this.state === TIMER_STATES.RUNNING) {
+                    this.pause();
+                } else if (this.state === TIMER_STATES.PAUSED) {
+                    this.resume();
+                }
+            }
+
+            pause() {
+                this.state = TIMER_STATES.PAUSED;
+                clearInterval(this.interval);
+                this.updateControls();
+                this.postMessage('pause');
+            }
+
+            resume() {
+                this.state = TIMER_STATES.RUNNING;
+                this.interval = setInterval(() => this.tick(), 1000);
+                this.updateControls();
+                this.postMessage('resume');
+            }
+
+            reset() {
+                clearInterval(this.interval);
+                this.state = TIMER_STATES.IDLE;
+                this.remainingSeconds = this.totalSeconds;
+                this.updateDisplay();
+                this.updateControls();
+                this.postMessage('reset');
+            }
+
+            complete() {
+                clearInterval(this.interval);
+                this.state = TIMER_STATES.COMPLETED;
+                this.remainingSeconds = 0;
+                this.updateDisplay();
+                this.updateControls();
+
+                if (this.elements.timerLabel) {
+                    this.elements.timerLabel.textContent = 'Час повертатися!';
+                }
+
+                this.postMessage('complete', { duration: this.duration });
+            }
+
+            updateDisplay() {
+                if (this.elements.timerDisplay) {
+                    this.elements.timerDisplay.textContent = formatTime(this.remainingSeconds);
+                }
+
+                if (this.elements.returnTime) {
+                    const returnDate = new Date(Date.now() + this.remainingSeconds * 1000);
+                    this.elements.returnTime.textContent = formatTimeHHMM(returnDate);
+                }
+
+                this.updateProgress();
+            }
+
+            updateProgress() {
+                if (!this.elements.progressCircle) return;
+
+                const progress = this.totalSeconds > 0 ? this.remainingSeconds / this.totalSeconds : 1;
+                const offset = PROGRESS_RING.CIRCUMFERENCE * (1 - progress);
+                this.elements.progressCircle.style.strokeDashoffset = offset;
+            }
+
+            updateControls() {
+                const isIdle = this.state === TIMER_STATES.IDLE;
+                const isRunning = this.state === TIMER_STATES.RUNNING;
+                const isPaused = this.state === TIMER_STATES.PAUSED;
+                const isCompleted = this.state === TIMER_STATES.COMPLETED;
+
+                // Start button
+                if (this.elements.startBtn) {
+                    this.elements.startBtn.style.display = (isIdle || isCompleted) ? 'inline-flex' : 'none';
+                }
+
+                // Secondary controls
+                if (this.elements.secondaryControls) {
+                    this.elements.secondaryControls.classList.toggle('controls__secondary--hidden', isIdle || isCompleted);
+                }
+
+                // Pause button text
+                if (this.elements.pauseBtn) {
+                    const icon = this.elements.pauseBtn.querySelector('.btn__icon');
+                    const text = this.elements.pauseBtn.querySelector('.btn__text');
+                    if (isPaused) {
+                        if (icon) icon.textContent = '▶';
+                        if (text) text.textContent = 'Продовжити';
+                    } else {
+                        if (icon) icon.textContent = '⏸';
+                        if (text) text.textContent = 'Пауза';
+                    }
+                }
+
+                // Timer label
+                if (this.elements.timerLabel && this.state !== TIMER_STATES.COMPLETED) {
+                    const labels = {
+                        [TIMER_STATES.IDLE]: 'Готовий',
+                        [TIMER_STATES.RUNNING]: 'Перерва',
+                        [TIMER_STATES.PAUSED]: 'Пауза',
+                    };
+                    this.elements.timerLabel.textContent = labels[this.state] || 'Готовий';
+                }
+            }
+
+            startClock() {
+                const updateClock = () => {
+                    if (this.elements.currentTime) {
+                        this.elements.currentTime.textContent = formatTimeHHMM(new Date());
+                    }
+
+                    // Update return time when idle
+                    if (this.state === TIMER_STATES.IDLE && this.elements.returnTime) {
+                        const returnDate = calculateReturnTime(this.duration);
+                        this.elements.returnTime.textContent = formatTimeHHMM(returnDate);
+                    }
+                };
+
+                updateClock();
+                setInterval(updateClock, 1000);
+            }
+
+            postMessage(event, data = {}) {
+                if (window.parent !== window) {
+                    window.parent.postMessage({
+                        source: 'descansar-embed',
+                        event,
+                        ...data
+                    }, '*');
+                }
+            }
+        }
+
+        // Parse URL parameters
+        function getOptions() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                duration: parseInt(params.get('duration')) || 15,
+                theme: params.get('theme') || 'light',
+                compact: params.get('compact') === 'true',
+                transparent: params.get('transparent') === 'true',
+                branding: params.get('branding') !== 'false',
+                autostart: params.get('autostart') === 'true',
+            };
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const options = getOptions();
+            window.descansar = new EmbedTimer(options);
+        });
+
+        // Listen for messages from parent
+        window.addEventListener('message', (event) => {
+            if (event.data?.target !== 'descansar-embed') return;
+
+            const { action, duration } = event.data;
+
+            switch (action) {
+                case 'start':
+                    window.descansar?.start();
+                    break;
+                case 'pause':
+                    window.descansar?.pause();
+                    break;
+                case 'resume':
+                    window.descansar?.resume();
+                    break;
+                case 'reset':
+                    window.descansar?.reset();
+                    break;
+                case 'setDuration':
+                    if (duration && window.descansar) {
+                        window.descansar.duration = duration;
+                        window.descansar.totalSeconds = duration * 60;
+                        window.descansar.remainingSeconds = duration * 60;
+                        window.descansar.updateDisplay();
+                    }
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>
